@@ -1,0 +1,283 @@
+/* =========================================================================
+   统一「装饰」面板（V16 §5）。
+
+   只作用于 .decor-panel 里的 .decorations-panel，复用 package-panel.css 的
+   纸感配色与按钮尺寸；四组缩略图 4 列，窄屏两列，不横向溢出。
+   ========================================================================= */
+
+.decor-panel .decorations-panel {
+  gap: 5px;
+  margin-top: 9px;
+}
+
+.decor-panel .decoration-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+  padding-top: 5px;
+  border-top: 1px dashed rgba(154, 125, 93, 0.22);
+}
+
+.decor-panel .decoration-group:first-of-type {
+  border-top: 0;
+  padding-top: 2px;
+}
+
+.decor-panel .decoration-group-head {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  min-width: 0;
+}
+
+.decor-panel .decoration-group-title {
+  flex: 0 0 auto;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--leaf-deep);
+}
+
+.decor-panel .decoration-group-hint {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 9.5px;
+  color: var(--muted);
+}
+
+.decor-panel .decoration-group-empty {
+  margin: 0;
+}
+
+.decor-panel .decoration-thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.decor-panel .decoration-thumb {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+  padding: 5px 2px 4px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(255, 253, 247, 0.6);
+  color: var(--leaf-deep);
+  cursor: pointer;
+  transition:
+    background var(--t-control) var(--ease),
+    border-color var(--t-control) var(--ease),
+    transform 120ms var(--ease);
+}
+
+.decor-panel .decoration-thumb:hover:not(:disabled) {
+  background: #fffdf8;
+  border-color: var(--leaf-line);
+  transform: translateY(-1px);
+}
+
+.decor-panel .decoration-thumb:disabled {
+  opacity: 0.42;
+  cursor: default;
+}
+
+.decor-panel .decoration-thumb-glyph {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #f6ecdf 0%, #eadcc8 100%);
+  box-shadow: inset 0 1px 2px rgba(74, 55, 36, 0.1);
+  color: #8a7350;
+}
+
+.decor-panel .decoration-thumb-glyph svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.decor-panel .decoration-thumb-label {
+  font-size: 9.5px;
+  line-height: 1.25;
+  text-align: center;
+  overflow-wrap: anywhere;
+  color: var(--ink-soft);
+}
+
+.decor-panel .decoration-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 7px;
+}
+
+.decor-panel .decoration-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 27px;
+  max-width: 100%;
+  padding: 0 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 253, 247, 0.85);
+  color: var(--ink-soft);
+  font-size: 10px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.decor-panel .decoration-item:hover {
+  border-color: var(--leaf-line);
+  background: #fffdf8;
+}
+
+.decor-panel .decoration-item.is-on {
+  border-color: var(--leaf-line);
+  background: var(--leaf-soft);
+  color: var(--leaf-deep);
+  font-weight: 600;
+}
+
+.decor-panel .decoration-item-dot {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 9px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(122, 96, 72, 0.3);
+}
+
+.decor-panel .decoration-item-sub {
+  font-size: 9px;
+  color: var(--muted);
+}
+
+.decor-panel .decoration-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 7px;
+  padding: 7px 8px;
+  border: 1px solid var(--leaf-line);
+  border-radius: 10px;
+  background: rgba(244, 248, 241, 0.8);
+}
+
+.decor-panel .decoration-editor-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.decor-panel .decoration-editor-title {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--leaf-deep);
+}
+
+.decor-panel .decoration-params {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.decor-panel .decoration-param {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.decor-panel .decoration-param-label {
+  flex: 0 0 48px;
+  font-size: 10px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.decor-panel .decoration-step {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  border: 1px solid var(--line-strong);
+  border-radius: 7px;
+  background: rgba(255, 253, 247, 0.9);
+  color: var(--leaf-deep);
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.decor-panel .decoration-step:hover {
+  border-color: var(--leaf-line);
+  background: #fffdf8;
+}
+
+.decor-panel .decoration-value {
+  min-width: 52px;
+  text-align: center;
+  font-size: 10px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.decor-panel .decoration-intensity {
+  grid-template-columns: 40px minmax(0, 1fr) 40px;
+  margin-top: 2px;
+}
+
+.decor-panel .decoration-intensity .decoration-value {
+  min-width: 0;
+  text-align: right;
+}
+
+.decor-panel .decoration-variants {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.decor-panel .decoration-variant {
+  min-height: 24px;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 253, 247, 0.85);
+  color: var(--muted);
+  font-size: 9.5px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.decor-panel .decoration-variant.is-on {
+  border-color: var(--leaf-line);
+  background: var(--leaf-soft);
+  color: var(--leaf-deep);
+  font-weight: 600;
+}
+
+@media (max-width: 520px) {
+  .decor-panel .decoration-thumbs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px;
+  }
+
+  .decor-panel .decoration-thumb-label {
+    font-size: 9px;
+  }
+
+  .decor-panel .decoration-param-label {
+    flex-basis: 42px;
+  }
+}

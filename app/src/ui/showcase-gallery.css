@@ -1,0 +1,32 @@
+/* 工作台右栏的作品展卡片列表（默认 variant）。
+   开屏右侧那套无边框展示（.showcase-gallery.is-stage）的样式在 start-screen.css，
+   跟开屏版面放在一起，不影响这里的右栏面板。 */
+.showcase-gallery{position:absolute;right:24px;top:112px;bottom:104px;width:258px;pointer-events:auto;color:var(--ink);z-index:3}
+.gallery-collection{max-height:100%;overflow:auto;overscroll-behavior:contain;background:rgba(251,246,238,.94);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow-sm)}
+.gallery-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.gallery-heading p{font-size:8px;letter-spacing:.18em;color:var(--leaf);margin:0 0 8px}
+.gallery-heading h2{font-family:'Noto Serif SC','Songti SC','SimSun',serif;font-size:24px;font-weight:400;letter-spacing:.12em;margin:0;color:var(--leaf-deep)}
+.gallery-heading>span{font:italic 28px Georgia,serif;color:#a96f78}
+.gallery-intro{font-size:12px;color:var(--muted);line-height:1.9;margin:16px 0}
+.gallery-group{display:flex;align-items:center;gap:8px;font-size:9px;letter-spacing:.14em;color:var(--leaf);margin:18px 0 10px}
+.gallery-group::after{content:'';flex:1;height:1px;background:var(--line)}
+.gallery-list{display:grid;gap:18px}
+.gallery-item{color:inherit;text-decoration:none;display:block;border-radius:10px}
+.gallery-item:focus-within{outline:2px solid var(--leaf);outline-offset:4px}
+.gallery-cover{display:block;aspect-ratio:6/7;background:#f0e8dc;position:relative;overflow:hidden;border-radius:10px}
+.gallery-cover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 250ms var(--ease)}
+.gallery-item:hover img{transform:scale(1.035)}
+.gallery-cover>span{position:absolute;bottom:10px;right:10px;background:rgba(251,246,238,.94);color:var(--leaf-deep);border:1px solid var(--line);padding:5px 8px;border-radius:20px;font-size:10px}
+.gallery-label{display:flex;gap:12px;align-items:baseline;padding:12px 0 0}
+.gallery-label>span{font:italic 16px Georgia,serif;color:#a96f78}
+.gallery-label h3{font-family:'Noto Serif SC','Songti SC','SimSun',serif;font-size:18px;font-weight:400;letter-spacing:.12em;margin:0;color:var(--leaf-deep)}
+.gallery-label p{font-size:9px;color:var(--muted);margin:6px 0 0;line-height:1.7}
+.gallery-tag{display:inline-block;margin-top:7px;font-size:9px;letter-spacing:.1em;color:var(--leaf-deep);border:1px solid var(--line);background:rgba(255,255,255,.62);border-radius:20px;padding:2px 8px}
+.gallery-start{display:inline-block;margin-top:9px;font-size:10px;letter-spacing:.06em;color:var(--leaf-deep);text-decoration:none;border-bottom:1px solid rgba(120,133,107,.45);padding-bottom:2px}
+.gallery-start:hover,.gallery-start:focus-visible{color:var(--rose);border-bottom-color:var(--rose)}
+.gallery-foot{border-top:1px solid var(--line);padding-top:12px;margin:18px 0 0;color:var(--muted);font-size:10px;line-height:1.8}
+.showcase-gallery .gallery-mobile-toggle{display:none}
+html.is-embedded .showcase-gallery{right:82px}
+@media(max-width:1200px){.showcase-gallery{width:220px;right:14px}.gallery-collection{padding:16px}}
+@media(max-width:900px),(max-height:650px){.showcase-gallery{top:auto;bottom:84px;right:14px;width:228px;max-height:calc(100dvh - 200px)}.showcase-gallery .gallery-mobile-toggle{display:block;margin-left:auto}.gallery-collection{display:none;margin-top:8px;max-height:calc(100dvh - 250px)}.showcase-gallery.is-open .gallery-collection{display:block}html.is-embedded .showcase-gallery{right:18px}.gallery-label h3{font-size:16px}.gallery-start{font-size:9px}}
+@media(prefers-reduced-motion:reduce){.gallery-cover img{transition:none}}

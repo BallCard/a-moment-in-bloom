@@ -1,0 +1,78 @@
+import {chromium} from 'playwright-core';
+import {mkdirSync,writeFileSync} from 'node:fs';
+import {newStudioAwarePage} from './studio-page.mjs';
+const URL=process.env.SMOKE_URL??'http://127.0.0.1:5173/';
+const PUBLIC_STUDIO=URL.includes('modelscope.cn/studios/');
+const OUT=process.env.SMOKE_OUT ?? (PUBLIC_STUDIO?'.verify/v9-online-smoke':'.verify/iteration5');
+mkdirSync(OUT,{recursive:true});
+let count=0;const checks=[];function check(name,ok,detail){checks.push({name,ok,detail});if(!ok)throw Error(`${name}: ${JSON.stringify(detail)}`);count++;console.log('ok',name);}
+const browser=await chromium.launch({channel:'chrome',headless:process.env.HEADED!=='1',args:['--disable-backgrounding-occluded-windows','--disable-renderer-backgrounding']});
+const context=await browser.newContext({viewport:{width:1366,height:768}});const page=await newStudioAwarePage(context);const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error'&&!m.text().includes('404')&&(!PUBLIC_STUDIO||m.location().url.startsWith('https://ballcard-bouquet-workbench.ms.show/')))errors.push(m.text());});
+const state=()=>page.evaluate(()=>window.__bouquetDebug.getState());const exec=fn=>page.evaluate(fn);const wait=ms=>page.waitForTimeout(ms);
+try{
+await page.goto(URL);await page.waitForFunction(()=>window.__bouquetDebug?.getState().catalog.mode==='manifest');
+check('空作品禁用包装和拍照',await page.getByTestId('stage-finish').isDisabled()&&await page.getByTestId('stage-wrap').isDisabled());
+check('主花与绿叶目录显示四种花型',await page.locator('.shelf-card').count()>=3);
+await page.getByTestId('palette-rose').click();check('点花材只拿起不新增',(await state()).doc.stems.length===0&&(await state()).placement.assetId==='rose-pink');
+await page.keyboard.press('Escape');check('Esc取消取花',!(await state()).placement);
+await page.getByTestId('palette-rose').scrollIntoViewIfNeeded();
+const palette=await page.getByTestId('palette-rose').boundingBox();await page.mouse.move(palette.x+30,palette.y+20);await page.mouse.down();await page.mouse.move(700,360,{steps:12});await wait(700);await page.mouse.up();await wait(500);
+check('从花材架拖入落一枝',(await state()).doc.stems.length===1);
+await page.mouse.move(palette.x+30,palette.y+20);await page.mouse.down();await page.mouse.move(500,30,{steps:10});await page.mouse.up();await wait(150);check('无效区松开取消且不落花',(await state()).doc.stems.length===1&&!(await state()).placement);
+const id=(await state()).doc.stems[0].id;
+// Public Studio can fetch GLBs much more slowly than localhost; wait for the
+// real mesh before asserting geometry-dependent trimming behavior.
+await page.waitForFunction(()=>[...window.__bouquetDebug.scene.views.values()].every(v=>v.object),null,{timeout:90000});
+await exec(()=>{const d=window.__bouquetDebug;d.store.select(d.getState().doc.stems[0].id);});await wait(300);
+check('选中不自动展开精调',await page.getByTestId('inspector').count()===0);
+await page.getByTestId('near-more').click();await page.getByTestId('trim-mode').click();await wait(300);
+const cut=await exec(()=>{const d=window.__bouquetDebug,v=d.scene.views.get(d.getState().selectedId);const mesh=v.object.getObjectByName('prepared-cut-line');mesh.updateWorldMatrix(true,false);const p=d.scene.camera.position.clone().set(.011,0,0);mesh.localToWorld(p);p.project(d.scene.camera);const r=d.scene.canvas.getBoundingClientRect();return {x:r.x+(p.x+1)*r.width/2,y:r.y+(1-p.y)*r.height/2,visible:mesh.visible};});
+check('修剪模式显示茎尾切线',cut.visible);await page.mouse.click(cut.x,cut.y);await wait(200);check('直接点切线剪短2cm',Math.abs((await state()).doc.stems[0].preparation.tailLength-.2)<.0001);
+await page.getByTestId('undo').click();check('撤销恢复茎长',Math.abs((await state()).doc.stems[0].preparation.tailLength-.22)<.0001);
+const leaf=await exec(()=>{const d=window.__bouquetDebug,v=d.scene.views.get(d.getState().selectedId),mesh=v.object.getObjectByName('prepared-leaf-1');mesh.geometry.computeBoundingBox();const p=mesh.geometry.boundingBox.getCenter(d.scene.camera.position.clone());mesh.localToWorld(p);p.project(d.scene.camera);const r=d.scene.canvas.getBoundingClientRect();return {x:r.x+(p.x+1)*r.width/2,y:r.y+(1-p.y)*r.height/2};});await page.mouse.click(leaf.x,leaf.y);await wait(100);check('直接点叶片剪除',(await state()).doc.stems[0].preparation.removedLeaves.includes(1));
+await page.getByTestId('undo').click();check('撤销恢复叶片',!(await state()).doc.stems[0].preparation.removedLeaves.includes(1));
+await page.getByTestId('stage-wrap').click();const before=JSON.stringify((await state()).doc.stems);
+await page.getByTestId('presentation-vase').click();check('换装先预览',(await state()).presentationPreview&&(await state()).doc.presentation.kind==='vase');
+await page.getByTestId('undo').click();check('预览中撤销等于取消',!(await state()).presentationPreview&&JSON.stringify((await state()).doc.stems)===before);
+await page.getByTestId('presentation-vase').click();await page.getByTestId('confirm-presentation').click();check('确认采用花瓶',!(await state()).presentationPreview&&(await state()).doc.presentation.kind==='vase');
+await page.getByTestId('presentation-paper').click();await page.getByTestId('confirm-presentation').click();check('换回纸包恢复原摆法',JSON.stringify((await state()).doc.stems)===before);
+await page.getByTestId('add-sheet').click();await page.getByTestId('add-sheet').click();check('独立纸片上限三张',(await state()).doc.presentation.sheets.length===3&&await page.getByTestId('add-sheet').isDisabled());
+await page.getByTestId('sheet-color-sage').click();check('纸片单独改色',(await state()).doc.presentation.sheets[0].paperId==='sage'&&(await state()).doc.presentation.sheets[1].paperId==='kraft');
+await page.getByTestId('package-step-ribbon').click();await wait(900);check('包装动画完成不会被状态更新重启',!(await exec(()=>window.__bouquetDebug.getDecorState())).animating);
+await exec(()=>{const d=window.__bouquetDebug,s=d.store;for(let i=1;i<7;i++){s.setPlacement(i<4?'rose-pink':i<6?'tulip-cream':'eucalyptus-green');s.placeStem({height:(i%3)*.035,tilt:12+i*3,direction:i*137,spin:30});}s.setPlacement(null);s.select(null);});await wait(1200);await page.screenshot({path:`${OUT}/01-wrap.png`});
+await page.getByTestId('presentation-pot').click();await page.getByTestId('confirm-presentation').click();await wait(700);await page.screenshot({path:`${OUT}/02-pot.png`});check('陶罐姿态限制插深和口沿',(await state()).doc.stems.every(s=>s.pose.tilt<=24&&Math.hypot(s.position[0],s.position[2])<.112));
+await page.getByTestId('stage-finish').click();await wait(2300);check('拍照只显示成品工具',await page.getByTestId('photo-tools').isVisible()&&await page.getByTestId('palette-panel').count()===0);
+check('预览与实际照片完全一致',await exec(async()=>document.querySelector('[data-testid=photo-preview]').src===await window.__bouquetDebug.captureThumbnail()));
+await page.getByTestId('album-save').click();await wait(200);check('首张照片入册',(await state()).album.length===1&&(await state()).album[0].photos.length===1);
+await exec(()=>{const s=window.__bouquetDebug.store;s.updatePhoto({frame:'postcard',format:'portrait',title:'窗边一刻',offsetX:.06});s.endTransaction();});await wait(500);await page.getByTestId('album-save').click();await wait(200);
+let album=(await state()).album;check('同作品多照合并',album.length===1&&album[0].photos.length===2);check('旧照片保留独立构图',album[0].photos[0].doc.photo.frame==='paper'&&album[0].photos[1].doc.photo.frame==='postcard');
+const photoCheck=await exec(async()=>{const d=window.__bouquetDebug;const r=await d.scene.exportPng(1600),bytes=new Uint8Array(await r.blob.arrayBuffer());return {w:r.width,h:r.height,png:[...bytes.slice(0,4)].join(',')};});check('竖幅导出真实1600x2000PNG',photoCheck.w===1600&&photoCheck.h===2000&&photoCheck.png==='137,80,78,71',photoCheck);
+await page.screenshot({path:`${OUT}/03-photo.png`});
+const savedId=album[0].id,firstPhoto=album[0].photos[0].id,secondPhoto=album[0].photos[1].id;
+await page.evaluate(({savedId,secondPhoto})=>window.__bouquetDebug.store.setAlbumCover(savedId,secondPhoto),{savedId,secondPhoto});check('设封面更新对应文档',(await state()).album[0].doc.photo.title==='窗边一刻');
+await page.evaluate(({savedId,firstPhoto})=>window.__bouquetDebug.store.openAlbumEntry(savedId,firstPhoto),{savedId,firstPhoto});await wait(600);check('打开指定照片恢复版本及拍照阶段',(await state()).stage==='finish'&&(await state()).doc.photo.frame==='paper');
+const dirCheck=await exec(()=>{const d=window.__bouquetDebug,v=d.scene.camera.position.clone().sub(d.scene.controls.target).normalize().toArray(),saved=d.getState().doc.photo.direction;return v.every((n,i)=>Math.abs(n-saved[i])<.0001);});check('再拍恢复原相机方向',dirCheck);
+await exec(()=>window.__bouquetDebug.store.setViewPreset('side'));await wait(900);
+await page.evaluate(({savedId,firstPhoto})=>window.__bouquetDebug.store.openAlbumEntry(savedId,firstPhoto),{savedId,firstPhoto});await wait(200);
+check('拍照阶段重开照片也恢复方向',await exec(()=>{const d=window.__bouquetDebug,v=d.scene.camera.position.clone().sub(d.scene.controls.target).normalize().toArray();return v.every((n,i)=>Math.abs(n-d.getState().doc.photo.direction[i])<.0001);}));
+await page.evaluate(({savedId,firstPhoto})=>window.__bouquetDebug.store.copyAlbumEntryToFree(savedId,firstPhoto),{savedId,firstPhoto});check('复制当前照片的版本',(await state()).mode==='free'&&(await state()).doc.photo.frame==='paper'&&(await state()).doc.createdAt!==album[0].doc.createdAt);
+await exec(async()=>{const d=window.__bouquetDebug;window.__albumBefore=JSON.stringify(d.getState().album);const original=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k==='bouquet-workbench.album.v1')throw new DOMException('Quota exceeded','QuotaExceededError');return original.call(this,k,v);};try{window.__quotaResult=d.store.saveToAlbum(await d.captureThumbnail());}finally{Storage.prototype.setItem=original;}});
+check('相册容量失败保留原照片及工作台',await exec(()=>window.__quotaResult===null&&window.__albumBefore===JSON.stringify(window.__bouquetDebug.getState().album)&&window.__bouquetDebug.getState().doc.stems.length===7));
+check('接单前照片失败不清空作品',await exec(()=>{const s=window.__bouquetDebug.store;return s.startCommission('c1-birthday',null)===false&&s.getState().doc.stems.length===7;}));
+await exec(()=>{const s=window.__bouquetDebug.store;s.openAlbum();});await page.getByTestId('album-entry').first().locator('button').click();await page.screenshot({path:`${OUT}/04-album.png`});await page.getByTestId('album-close').click();
+if(!PUBLIC_STUDIO&&URL.includes(':5173')){const migration=await exec(async()=>{const {sanitizeDocument}=await import('/src/data/document.ts');const {sanitizeAlbum}=await import('/src/data/album.ts');const d=window.__bouquetDebug.getState().doc;const old=JSON.parse(JSON.stringify(d));old.version=3;delete old.presentation;delete old.photo;old.stems.forEach(s=>delete s.preparation);const migrated=sanitizeDocument(old,d.assetsVersion).doc;const legacy=sanitizeAlbum({version:1,entries:[{id:'legacy',doc:old,thumbnail:'data:image/jpeg;base64,a'}]},d.assetsVersion);return {version:migrated.version,kind:migrated.presentation.kind,tail:migrated.stems[0].preparation.tailLength,photos:legacy[0].photos.length};});check('旧schema3与旧单图相册迁移',migration.version===4&&migration.kind==='paper'&&migration.tail===.22&&migration.photos===1,migration);}else console.log('SKIP direct module migration assertion: verified locally; production has no /src');
+await exec(()=>{const s=window.__bouquetDebug.store;s.startCommission('c1-birthday','data:image/jpeg;base64,a');for(let i=0;i<3;i++){s.setPlacement('rose-cream');s.placeStem({tilt:i*10,direction:i*120});}s.setPlacement(null);});
+if(!PUBLIC_STUDIO&&URL.includes(':5173')){const pink=await exec(async()=>{const {evaluateCommission,getCommission}=await import('/src/data/commissions.ts');const d=window.__bouquetDebug.getState();return evaluateCommission(d.doc,getCommission(d.commissionId),d.catalog).checks[0].met;});check('奶油玫瑰不冒充粉色主花',pink===false);}else console.log('SKIP direct commission-module assertion: verified locally; production has no /src');
+await exec(()=>{const s=window.__bouquetDebug.store;s.clearStems();for(let i=0;i<3;i++){s.setPlacement('rose-pink');s.placeStem({tilt:i*10,direction:i*120});}s.setPlacement('eucalyptus-green');s.placeStem({tilt:30,direction:70});s.setPlacement(null);s.setPackageStep('card');s.updateCardFieldTransient('message','妈妈生日快乐');s.endTransaction();s.setStage('finish');});await wait(1700);
+const response=await exec(async()=>{const d=window.__bouquetDebug;return d.store.deliverCommission(await d.captureThumbnail());});check('粉色生日心愿完整交付',response.complete);check('人物回应原文入册',(await state()).album[0].commission.response===(await state()).commissionResponse);
+await page.getByTestId('mode-commission').click();await wait(200);for(let i=0;i<3;i++){await page.waitForFunction(()=>{const imgs=[...document.querySelectorAll('.commission-picker .customer-portrait')];return imgs.length===1&&imgs.every(img=>img.complete&&img.naturalWidth>0);},null,{timeout:60000});check('来信单卡与人物加载 '+i,await page.locator('.commission-picker .customer-portrait').count()===1&&await page.locator('.commission-picker .customer-portrait').evaluateAll(imgs=>imgs.every(i=>i.complete&&i.naturalWidth>0)));if(i<2){await page.getByRole('button',{name:'下一张心愿单'}).click();await wait(200);}}await page.screenshot({path:`${OUT}/05-people.png`});await page.keyboard.press('Escape');
+await exec(()=>{const s=window.__bouquetDebug.store;s.clearStems();for(let i=0;i<12;i++){s.setPlacement(i%3===0?'eucalyptus-green':i%3===1?'rose-pink':'tulip-cream');s.placeStem({tilt:(i%6)*8,direction:i*137,height:(i%3)*.025});}s.setPlacement(null);s.setStage('arrange');});await wait(2000);
+const performance12=[];for(let i=0;i<3;i++){await wait(1000);performance12.push(await exec(()=>window.__bouquetDebug.getSceneState().stats));}
+await exec(()=>{const s=window.__bouquetDebug.store;for(let i=12;i<20;i++){s.setPlacement(i%3===0?'eucalyptus-green':i%3===1?'rose-pink':'tulip-cream');s.placeStem({tilt:(i%6)*8,direction:i*137,height:(i%3)*.025});}s.setPlacement(null);});await page.waitForFunction(()=>[...window.__bouquetDebug.scene.views.values()].every(v=>v.object),null,{timeout:90000});check('20枝模型均加载',await exec(()=>[...window.__bouquetDebug.scene.views.values()].every(v=>v.object)&&window.__bouquetDebug.getState().doc.stems.length===20));
+check('第21枝不添加',await exec(()=>{const s=window.__bouquetDebug.store;s.setPlacement('rose-pink');s.placeStem({tilt:10,direction:0});s.setPlacement(null);return s.getState().doc.stems.length===20;}));
+await page.screenshot({path:`${OUT}/06-twenty.png`});const perf=await exec(()=>window.__bouquetDebug.getSceneState());console.log('PERFORMANCE',JSON.stringify(perf.stats));
+const performance20=[];for(let i=0;i<5;i++){await wait(1000);performance20.push(await exec(()=>window.__bouquetDebug.getSceneState().stats));}
+await wait(800);const docBefore=await exec(()=>JSON.stringify(window.__bouquetDebug.getState().doc.stems));await page.reload();await page.getByTestId('start-continue').click();await page.waitForFunction(()=>window.__bouquetDebug?.getState().catalog.mode==='manifest');check('刷新恢复全部花枝和整备数据',await exec(()=>JSON.stringify(window.__bouquetDebug.getState().doc.stems))===docBefore);check('多照片相册刷新保留',(await state()).album.some(e=>e.photos.length===2));
+check('无页面与WebGL错误',errors.length===0,errors);
+writeFileSync(`${OUT}/results.json`,JSON.stringify({date:new Date().toISOString(),url:URL,skipped:PUBLIC_STUDIO?2:0,passed:count,checks,performance:perf.stats,performance12,performance20,errors},null,2));console.log(`PASSED ${count}`);
+}catch(error){writeFileSync(`${OUT}/failure.json`,JSON.stringify({date:new Date().toISOString(),passed:count,checks,error:String(error),errors},null,2));throw error;}finally{await browser.close();}

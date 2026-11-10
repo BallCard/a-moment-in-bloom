@@ -1,0 +1,40 @@
+import {chromium} from 'playwright-core';
+import {writeFileSync,mkdirSync} from 'node:fs';
+const browser=await chromium.launch({channel:'chrome',headless:true});let count=0;const checks=[];
+function check(name,ok){checks.push({name,ok});if(!ok)throw Error(name);count++;console.log('ok',name);}
+mkdirSync('.verify/v5',{recursive:true});
+try{
+ const page=await browser.newPage({viewport:{width:1366,height:768}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('http://127.0.0.1:5173');await page.waitForFunction(()=>window.__bouquetDebug?.getState().catalog.mode==='manifest');
+ const run=fn=>page.evaluate(fn);const state=()=>run(()=>window.__bouquetDebug.getState());
+ check('5花型12配色',await run(()=>{const c=window.__bouquetDebug.getState().catalog;return c.families.length===5&&c.entries.length===12;}));
+ await run(()=>{const s=window.__bouquetDebug.store;for(const asset of ['rose-pink','spray-rose-pink','daisy-gold']){s.setPlacement(asset);s.placeStem({tilt:20,direction:45});}s.setPlacement(null);s.select(s.getState().doc.stems[0].id);});
+ await page.waitForTimeout(1000);const original=(await state()).doc.stems[0].scale;
+ const camera=await run(()=>window.__bouquetDebug.scene.camera.position.toArray());
+ await page.mouse.move(700,400);await page.keyboard.down('Control');await page.mouse.wheel(0,-120);await page.mouse.wheel(0,-120);await page.keyboard.up('Control');await page.waitForTimeout(300);
+ check('Ctrl滚轮缩放选花',Math.abs((await state()).doc.stems[0].scale-original-.04)<.0001);
+ check('缩花不改变镜头',JSON.stringify(camera)===JSON.stringify(await run(()=>window.__bouquetDebug.scene.camera.position.toArray())));
+ await page.keyboard.press('Control+z');check('连续滚轮一次撤销',(await state()).doc.stems[0].scale===original);
+ await page.keyboard.press('Control+d');check('Ctrl+D复制一枝',(await state()).doc.stems.length===4);
+ await page.keyboard.press('Delete');check('Delete删除选中',(await state()).doc.stems.length===3);
+ check('多头玫瑰三个花头参与避让',await run(()=>{const d=window.__bouquetDebug,id=d.getState().doc.stems[1].id;return d.scene.collectPlacedHeads().filter(h=>h.id===id).length===3;}));
+ await page.getByTestId('mode-commission').click();await page.keyboard.press('ArrowRight');check('来信方向键翻页',await page.locator('[data-testid=commission-card]').getAttribute('data-commission-id')!=='c1-birthday');
+ const preset=(await state()).viewPreset;await page.keyboard.press('1');check('委托弹窗不触发视角快捷键',(await state()).viewPreset===preset);await page.screenshot({path:'.verify/v5/letter.png'});await page.keyboard.press('Escape');
+ await run(()=>{const s=window.__bouquetDebug.store;s.setPackageStep('card');s.setStage('finish');s.updatePhoto({scene:'gallery',frame:'postcard',title:'墨绿展台'});s.endTransaction();});await page.waitForTimeout(1500);
+ check('墨绿展台场景生效',await run(()=>window.__bouquetDebug.scene.scene.background.getHexString()==='30443d'));
+ const documentBefore=JSON.stringify((await state()).doc.stems);
+ check('成品修剪创建独立几何',await run(()=>{let n=0;for(const v of window.__bouquetDebug.scene.views.values())v.object.traverse(o=>{if(o.userData.trimSource)n++;});return n>0;}));
+ const headBefore=await run(()=>{const d=window.__bouquetDebug,v=d.scene.views.get(d.getState().doc.stems[0].id);return v.object.getObjectByName('original-flower-head').geometry.uuid;});
+ await run(()=>{const s=window.__bouquetDebug.store;s.updatePhoto({autoTrim:false});s.endTransaction();});
+ check('关闭自动整理恢复原几何',await run(()=>{let n=0;for(const v of window.__bouquetDebug.scene.views.values())v.object.traverse(o=>{if(o.userData.trimSource)n++;});return n===0;}));
+ check('修剪不改变花头和作品姿态',documentBefore===JSON.stringify((await state()).doc.stems)&&headBefore===await run(()=>{const d=window.__bouquetDebug,v=d.scene.views.get(d.getState().doc.stems[0].id);return v.object.getObjectByName('original-flower-head').geometry.uuid;}));
+ await page.getByRole('button',{name:'边框',exact:true}).click();const input=page.getByRole('textbox',{name:'照片题名'});await input.fill('输入撤销');const stemsBefore=JSON.stringify((await state()).doc.stems);await input.press('Control+z');check('文字撤销不撤销花枝',JSON.stringify((await state()).doc.stems)===stemsBefore);
+ await page.route('**/api/review',r=>r.fulfill({status:200,contentType:'application/json',body:JSON.stringify({score:88,summary:'颜色与背景形成对比',strengths:['层次清楚'],suggestions:['少量留白']})}));
+ await page.getByRole('button',{name:'请 AI 看看这束花'}).click();await page.waitForSelector('.ai-score');check('AI点评正确呈现',await page.locator('.ai-score').innerText()==='88 / 100');
+ await page.screenshot({path:'.verify/v5/gallery.png'});
+ await run(()=>{const s=window.__bouquetDebug.store;s.updatePhoto({offsetX:.02});s.endTransaction();});check('修改作品使旧评分失效',await page.locator('.ai-score').count()===0);
+ await page.unroute('**/api/review');await page.route('**/api/review',r=>r.fulfill({status:503,contentType:'application/json',body:JSON.stringify({error:'测试：评分暂时不可用'})}));await page.getByRole('button',{name:'请 AI 看看这束花'}).click();await page.getByRole('alert').waitFor();check('评分失败明确显示并保留作品',(await state()).doc.stems.length===3);
+ await run(()=>{const s=window.__bouquetDebug.store;s.setStage('arrange');});check('编辑阶段恢复背景',await run(()=>Boolean(window.__bouquetDebug.scene.scene.background.isTexture)));
+ await page.reload();await page.waitForFunction(()=>window.__bouquetDebug?.getState().catalog.mode==='manifest');check('扩展花材与摄影设置刷新保留',(await state()).doc.stems.some(s=>s.assetId==='spray-rose-pink')&&(await state()).doc.photo.scene==='gallery'&&(await state()).doc.photo.autoTrim===false);
+ check('无页面错误',errors.length===0);writeFileSync('.verify/v5/results.json',JSON.stringify({count,checks},null,2));console.log('PASSED',count);
+}finally{await browser.close();}

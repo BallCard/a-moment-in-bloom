@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>花材 QA · 静态缩略图与多视角（dev-only）</title>
+    <!--
+      dev-only 页面：不参与 tsc（tsconfig include 只有 src）与 vite build（构建入口只有 index.html）。
+      用 vite dev server 跑：npm run dev -- --port 5190 --strictPort 然后打开 /qa/
+      <base href="/"> 是关键：thumbnails.ts 用 import.meta.env.BASE_URL('./') 拼 assets 路径，
+      qa 页面在 /qa/ 下，没有 base 的话 './assets/x.glb' 会解析成 /qa/assets/x.glb 而 404。
+    -->
+    <base href="/" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: #1d1b19;
+        color: #efe9df;
+        font: 13px/1.6 system-ui, 'Microsoft YaHei', sans-serif;
+      }
+      #stage {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px;
+      }
+      #stage canvas {
+        background: #f6f1e8;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="stage"></div>
+    <script type="module" src="/qa/qa.ts"></script>
+  </body>
+</html>

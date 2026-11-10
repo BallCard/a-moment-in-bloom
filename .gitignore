@@ -1,0 +1,27 @@
+# 内训原件、摘录、网页快照、生成资产与本机记录
+/materials/private/
+/assets/local/
+/experiments/local/
+/deliverables/local/
+# 用户提供的 Lux3D 整束结果 ZIP：原始产物留本地，加工后资产在 app/public/showcase/
+/result.zip
+/result (1).zip
+/result2.zip
+/lux3d_model_exports.zip
+/textured (1).glb
+/花间一刻-向阳小札-Lux3D整束.png
+.env
+.env.*
+!.env.example
+*.local.*
+__pycache__/
+*.py[cod]
+.venv/
+node_modules/
+dist/
+.tmp/
+.DS_Store
+Thumbs.db
+
+# 用户提供的原始模型压缩包，仅本地保留
+/result.zip

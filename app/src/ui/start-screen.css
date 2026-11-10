@@ -1,0 +1,139 @@
+.start-screen{min-height:100dvh;background:#f5ecdf;color:var(--ink);display:flex;align-items:center;justify-content:center;gap:6vw;padding:48px 5vw;box-sizing:border-box;overflow:auto;position:absolute;inset:0}
+.start-intro{max-width:420px;width:100%;flex-shrink:0}
+.start-intro>img{object-fit:contain}
+.start-eyebrow{font:11px Georgia,serif;letter-spacing:.26em;color:var(--leaf)}
+.start-intro h1{font:normal 42px 'Noto Serif SC','SimSun',serif;letter-spacing:.2em;margin:18px 0}
+.start-intro>p{line-height:1.9}
+.start-choices{display:grid;gap:12px;margin-top:28px}
+.start-choices .btn{padding:14px 20px;text-align:left;font-size:15px;white-space:normal}
+.start-choices small{display:block;margin-top:7px;font-size:11px;font-weight:normal}
+.start-intro .start-note{font-size:12px;color:var(--muted);margin:20px 0}
+.start-gallery{position:relative}/* 未展开作品展时这一块不渲染；展开后的尺寸见下面 .has-gallery 规则 */
+
+/* -------------------------------------------------------------------------
+   展开作品展：左侧选择，右侧一块没有边框、底色和滚动条的作品展示。
+   ------------------------------------------------------------------------- */
+.start-screen.has-gallery{display:flex;align-items:stretch;justify-content:flex-start;gap:0;padding:0;overflow:hidden}
+.start-screen.has-gallery .start-intro{flex:1 1 auto;max-width:560px;align-self:safe center;padding:clamp(28px,5vh,56px) clamp(28px,3vw,48px) clamp(28px,5vh,56px) clamp(32px,5vw,84px)}
+/* 右栏贴合右边缘：宽度跟 4:5 的封面同比例，图不会被拉花，也不留卡片边。 */
+.start-screen.has-gallery .start-gallery{position:relative;flex:0 0 auto;width:min(48vw,86dvh,800px);margin-left:auto;height:100dvh;max-height:none;overflow:hidden}
+
+.start-gallery .showcase-gallery.is-stage{position:relative;inset:auto;display:block;width:100%;height:100%;max-height:none;padding:0;color:var(--ink);pointer-events:auto;z-index:0}
+html.is-embedded .start-gallery .showcase-gallery.is-stage{inset:auto}
+.stage-frames{position:absolute;inset:0;overflow:hidden;background:#f1e9dc}
+.stage-frame{position:absolute;inset:0;margin:0;opacity:0;transition:opacity 420ms var(--ease);pointer-events:none}
+.stage-frame.is-active{opacity:1;pointer-events:auto}
+.stage-frame img{display:block;width:100%;height:108%;object-fit:cover;object-position:50% 24%}
+.stage-frame::after{content:'';position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(to right,#f5ecdf 0,rgba(245,236,223,.92) 4%,rgba(245,236,223,0) 26%),
+  linear-gradient(to bottom,rgba(245,236,223,.96) 0,rgba(245,236,223,.84) 7%,rgba(245,236,223,0) 19%),
+  linear-gradient(to top,#f5ecdf 0%,#f5ecdf 14%,rgba(245,236,223,.99) 20%,rgba(245,236,223,.95) 28%,rgba(245,236,223,.75) 36%,rgba(245,236,223,.4) 46%,rgba(245,236,223,0) 62%)}
+
+.stage-top{position:absolute;top:clamp(20px,3.4vh,34px);left:clamp(24px,3.4vw,48px);right:clamp(24px,3vw,42px);display:flex;align-items:flex-start;justify-content:space-between;gap:20px;pointer-events:none;z-index:2}
+.stage-eyebrow{font:10px Georgia,serif;letter-spacing:.3em;color:var(--leaf);margin:0}
+.stage-meta{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.stage-index{display:flex;align-items:baseline;gap:7px;margin:0;font:italic 13px Georgia,serif;color:#a96f78}
+.stage-index-now{font:normal 26px Georgia,serif;line-height:1;letter-spacing:.04em}
+.stage-index-total{letter-spacing:.12em;color:rgba(127,111,95,.9)}
+
+.stage-dots{display:flex;align-items:center;gap:2px;pointer-events:auto}
+.stage-dot{width:20px;height:20px;padding:0;border:0;background:none;display:grid;place-items:center;cursor:pointer;border-radius:50%}
+.stage-dot::after{content:'';width:5px;height:5px;border-radius:50%;background:rgba(63,93,74,.26);transition:background 200ms var(--ease),transform 200ms var(--ease)}
+.stage-dot.is-on::after{background:var(--leaf);transform:scale(1.5)}
+.stage-dot:hover::after{background:rgba(63,93,74,.55)}
+.stage-dot:focus-visible{outline:2px solid var(--leaf);outline-offset:0}
+
+.stage-caption{position:absolute;left:clamp(24px,3.4vw,48px);bottom:clamp(22px,4vh,44px);max-width:min(390px,64%);z-index:2;transition:opacity 260ms var(--ease),transform 260ms var(--ease)}
+.showcase-gallery.is-stage.is-swapping .stage-caption{opacity:0;transform:translateY(8px);transition-duration:140ms}
+.stage-kicker{font:10px Georgia,serif;letter-spacing:.22em;color:var(--leaf);margin:0}
+.stage-title{font-family:'Noto Serif SC','Songti SC','SimSun',serif;font-weight:400;font-size:clamp(26px,2.4vw,34px);letter-spacing:.12em;color:var(--leaf-deep);margin:10px 0 0}
+.stage-english{font:italic 13px Georgia,serif;color:#a96f78;margin:8px 0 0}
+.stage-desc{font-size:13px;line-height:1.9;color:var(--ink-soft);margin:12px 0 0;max-width:30ch}
+.stage-flowers{font-size:11px;line-height:1.8;letter-spacing:.04em;color:var(--muted);margin:10px 0 0}
+.stage-tag{display:inline-block;margin-top:10px;font-size:9px;letter-spacing:.12em;color:var(--leaf-deep);background:rgba(255,255,255,.7);border-radius:20px;padding:3px 10px}
+.stage-actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:18px}
+.stage-start{font-size:12px;letter-spacing:.08em;color:var(--leaf-deep);text-decoration:none;border-bottom:1px solid rgba(120,133,107,.5);padding-bottom:3px;transition:color 160ms var(--ease),border-color 160ms var(--ease)}
+.stage-view{font-size:11px;letter-spacing:.04em;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:3px}
+.stage-start:hover,.stage-start:focus-visible{color:var(--rose);border-bottom-color:var(--rose)}
+.stage-view:hover,.stage-view:focus-visible{color:var(--ink);border-bottom-color:var(--line-strong)}
+
+.stage-nav{position:absolute;right:clamp(22px,2.6vw,40px);bottom:clamp(22px,4vh,44px);display:flex;flex-direction:column;align-items:flex-end;gap:12px;z-index:2}
+.stage-hint{font-size:10px;letter-spacing:.12em;color:var(--muted);margin:0}
+.stage-hint .hint-touch{display:none}
+.stage-arrows{display:flex;gap:6px}
+.stage-arrow{width:42px;height:42px;padding:0;border:0;border-radius:50%;background:rgba(251,246,238,.62);color:var(--leaf-deep);font:15px Georgia,serif;cursor:pointer;display:grid;place-items:center;transition:background 180ms var(--ease),color 180ms var(--ease),transform 180ms var(--ease)}
+.stage-arrow:hover{background:#fbf6ee;color:var(--leaf);transform:translateY(-1px)}
+.stage-arrow:focus-visible{outline:2px solid var(--leaf);outline-offset:2px}
+.stage-arrow:active{transform:translateY(0)}
+
+@media(prefers-reduced-motion:reduce){
+  .stage-frame{transition:none}
+  .stage-caption,.showcase-gallery.is-stage.is-swapping .stage-caption{transition:none;transform:none}
+  .stage-arrow:hover{transform:none}
+}
+
+@media(max-width:1100px){
+  .stage-caption{max-width:72%}
+  .stage-title{font-size:clamp(24px,3vw,30px)}
+}
+
+@media(max-width:860px){
+  .start-screen{display:block;padding:30px 24px}
+  .start-intro{margin:auto}
+  .start-intro h1{font-size:32px}
+  .start-screen.has-gallery{display:flex;flex-direction:column;height:100dvh;padding:0;overflow:auto}
+  .start-screen.has-gallery .start-intro{flex:0 0 auto;max-width:none;align-self:stretch;padding:20px 22px 0}
+  .start-screen.has-gallery .start-intro>img{width:34px;height:34px}
+  .start-screen.has-gallery .start-eyebrow{font-size:9px;letter-spacing:.24em;margin:6px 0 0}
+  .start-screen.has-gallery .start-intro h1{font-size:26px;margin:6px 0 0}
+  .start-screen.has-gallery .start-tagline{display:none}
+  .start-screen.has-gallery .start-choices{margin-top:14px;gap:8px;grid-template-columns:1fr 1fr}
+  .start-screen.has-gallery .start-choices .btn:first-child{grid-column:1/-1}
+  .start-screen.has-gallery .start-choices .btn{padding:11px 12px;font-size:13.5px}
+  .start-screen.has-gallery .start-choices small{margin-top:4px;font-size:10px}
+  .start-screen.has-gallery .start-intro .start-note{font-size:11px;margin:12px 0 0}
+  .start-screen.has-gallery .start-gallery{flex:1 1 auto;display:flex;width:auto;margin-left:0;height:auto;min-height:340px;padding:12px 0 20px;overflow:visible}
+  .start-gallery .showcase-gallery.is-stage{flex:1;height:auto;min-height:0}
+  .stage-frame img{height:104%;object-position:50% 28%}
+  .stage-caption{left:20px;right:20px;bottom:62px;max-width:none}
+  .stage-title{font-size:25px;margin-top:8px}
+  .stage-english,.stage-kicker,.stage-flowers{display:none}
+  .stage-desc{margin-top:8px;font-size:12px;max-width:none}
+  .stage-tag{margin-top:8px}
+  .stage-actions{gap:16px;margin-top:12px}
+  .stage-nav{right:20px;bottom:14px;gap:0}
+  .stage-hint{display:none}
+  .stage-arrow{width:40px;height:40px;background:rgba(251,246,238,.82)}
+  .stage-top{top:16px;left:20px;right:20px}
+  .stage-eyebrow{white-space:nowrap;letter-spacing:.22em}
+  .stage-meta{gap:6px}
+  .stage-index-now{font-size:22px}
+  .stage-frame::after{background:
+    linear-gradient(to top,#f5ecdf 0%,#f5ecdf 28%,rgba(245,236,223,.95) 38%,rgba(245,236,223,.6) 48%,rgba(245,236,223,0) 64%),
+    linear-gradient(to bottom,rgba(245,236,223,.72) 0,rgba(245,236,223,0) 14%)}
+}
+
+@media(max-width:860px) and (max-height:700px){
+  .start-gallery .showcase-gallery.is-stage{min-height:300px}
+  .stage-tag{display:none}
+}
+
+/* 触屏设备提示换成按钮文案。 */
+@media(pointer:coarse){
+  .stage-hint .hint-wheel{display:none}
+  .stage-hint .hint-touch{display:inline}
+}
+
+@media(max-height:680px) and (min-width:861px){
+  .start-screen.has-gallery .start-intro{padding-top:24px;padding-bottom:24px}
+  .start-intro h1{margin:12px 0;font-size:36px}
+  .start-choices{margin-top:20px;gap:10px}
+  .stage-desc{margin-top:8px}
+  .stage-actions{margin-top:14px}
+}
+
+/* 极矮的桌面窗口：让左侧仍然可以滚到按钮，不至于被裁掉。 */
+@media(max-height:560px) and (min-width:861px){
+  .start-screen.has-gallery{overflow:auto}
+  .start-screen.has-gallery .start-intro{align-self:flex-start}
+}

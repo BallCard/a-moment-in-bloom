@@ -1,0 +1,322 @@
+/* =========================================================================
+   花材知识浮窗（V16 §4）：右侧原调整区位置的磨砂浮窗。
+   - 浮窗本体用 backdrop-filter + 半透明纸色做「磨砂」，不遮挡顶栏；
+   - 预览态不接收指针（方便指针离开花材卡就消失），固定态才可移入滚动；
+   - 减少动态效果偏好（html[data-motion='reduced']）下不做位移动画。
+   ========================================================================= */
+
+.knowledge-card {
+  position: fixed;
+  top: 88px;
+  right: 18px;
+  bottom: 18px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  min-height: 0;
+  padding: 12px 0 0;
+  border: 1px solid color-mix(in srgb, var(--line-strong) 70%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--paper-2) 74%, transparent);
+  box-shadow: var(--shadow-lift);
+  color: var(--ink);
+  /* 磨砂玻璃：背后是右侧调整面板/画面，模糊后只留色块。 */
+  backdrop-filter: blur(20px) saturate(1.12);
+  -webkit-backdrop-filter: blur(20px) saturate(1.12);
+  animation: knowledge-in 200ms var(--ease) both;
+}
+
+.knowledge-card.is-preview,
+.knowledge-card.is-pinned {
+  pointer-events: auto;
+}
+
+/* 预览态：玩家还没打算阅读，只示意内容存在，不抢指针。 */
+.knowledge-card.is-preview {
+  pointer-events: none;
+}
+
+.knowledge-card.is-pinned {
+  background: color-mix(in srgb, var(--paper-2) 88%, transparent);
+}
+
+@keyframes knowledge-in {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.knowledge-card[data-motion='reduced'] {
+  animation: knowledge-fade 140ms linear both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .knowledge-card {
+    animation: knowledge-fade 140ms linear both;
+  }
+}
+
+@keyframes knowledge-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---------- 头部 ---------- */
+
+.knowledge-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex: none;
+  padding: 0 12px 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.knowledge-titles {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.knowledge-name {
+  margin: 0;
+  color: var(--leaf-deep);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+.knowledge-meta {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 10.5px;
+  line-height: 1.4;
+}
+
+.knowledge-close {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--paper-3) 84%, transparent);
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 22px;
+  cursor: pointer;
+}
+
+.knowledge-close:hover {
+  border-color: var(--clay);
+  color: var(--ink);
+}
+
+.knowledge-close:focus-visible {
+  outline: 2px solid var(--leaf-line);
+  outline-offset: 1px;
+}
+
+/* 状态行：预览 / 已固定 */
+.knowledge-phase-line {
+  flex: none;
+  margin: 8px 12px 0;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: rgba(94, 78, 60, 0.07);
+  color: var(--muted);
+  font-size: 9.5px;
+  line-height: 1.45;
+}
+
+.knowledge-phase-line.is-pinned {
+  background: var(--leaf-soft);
+  color: var(--leaf-deep);
+}
+
+/* ---------- 可滚动正文 ---------- */
+
+.knowledge-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 10px 12px 14px;
+  scrollbar-width: thin;
+}
+
+.knowledge-figure {
+  margin: 0 0 8px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: linear-gradient(165deg, #fffaf1, #f0e2cf);
+}
+
+.knowledge-figure .model-thumbnail {
+  display: block;
+  width: 100%;
+  height: 148px;
+  object-fit: contain;
+  padding: 6px 0;
+}
+
+.knowledge-figure-empty {
+  display: grid;
+  place-items: center;
+  height: 148px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.knowledge-figure figcaption {
+  padding: 4px 8px 6px;
+  border-top: 1px dashed var(--line);
+  color: #93806b;
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+.knowledge-aka {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 10.5px;
+  line-height: 1.45;
+}
+
+/* ---------- 三节内容 ---------- */
+
+.knowledge-section {
+  margin: 0 0 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--line);
+}
+
+.knowledge-section:last-of-type {
+  border-bottom: none;
+}
+
+.knowledge-section h4 {
+  margin: 0 0 4px;
+  color: var(--leaf-deep);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.knowledge-section p {
+  margin: 0 0 4px;
+  color: var(--ink-soft);
+  font-size: 11.5px;
+  line-height: 1.62;
+}
+
+.knowledge-section ul {
+  margin: 0;
+  padding-left: 15px;
+  color: var(--ink-soft);
+  font-size: 11.5px;
+  line-height: 1.62;
+}
+
+.knowledge-section li {
+  margin: 0 0 3px;
+}
+
+.knowledge-section li::marker {
+  color: var(--clay);
+}
+
+.knowledge-note {
+  color: var(--ink) !important;
+}
+
+.knowledge-note strong {
+  color: var(--rose);
+  font-weight: 600;
+}
+
+.knowledge-tiny {
+  margin: 3px 0 0 !important;
+  color: #93806b !important;
+  font-size: 9.5px !important;
+  line-height: 1.5 !important;
+}
+
+/* 来源：默认收起，点开才展开（计划 §4「用户界面按需展开来源」） */
+.knowledge-sources {
+  margin-top: 6px;
+  padding: 6px 8px;
+  border: 1px dashed var(--line);
+  border-radius: 9px;
+  background: rgba(255, 253, 247, 0.45);
+  color: var(--muted);
+  font-size: 9.5px;
+  line-height: 1.5;
+}
+
+.knowledge-sources summary {
+  color: var(--muted);
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.knowledge-sources ul {
+  margin: 4px 0 0;
+  padding-left: 14px;
+}
+
+.knowledge-sources a {
+  color: var(--leaf-deep);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  word-break: break-all;
+}
+
+.knowledge-sources p {
+  margin: 4px 0 0;
+}
+
+/* ---------- 窄屏 / 触屏：浮窗变成右侧全宽卡片，不盖顶栏 ---------- */
+
+@media (max-width: 860px) {
+  .knowledge-card {
+    top: 74px;
+    right: 10px;
+    bottom: 10px;
+    width: min(340px, calc(100vw - 20px));
+  }
+}
+
+@media (max-width: 460px) {
+  .knowledge-card {
+    left: 10px;
+    right: 10px;
+    width: auto;
+    top: 68px;
+  }
+
+  .knowledge-figure .model-thumbnail,
+  .knowledge-figure-empty {
+    height: 120px;
+  }
+}
+
+@media (max-height: 700px) {
+  .knowledge-figure .model-thumbnail,
+  .knowledge-figure-empty {
+    height: 108px;
+  }
+}

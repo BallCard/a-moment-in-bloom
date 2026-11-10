@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {createReviewer,validateInput,validateReview,REVIEW_MODEL,VISION_MODEL} from '../server/review.mjs';
+const result={score:82,summary:'层次清晰',strengths:['颜色统一'],suggestions:['留一点空隙']};
+assert.throws(()=>validateInput({image:'https://example.com',context:''}));
+assert.throws(()=>validateInput({image:'data:image/jpeg;base64,YQ==',context:'x'.repeat(6001)}));
+assert.throws(()=>validateReview({...result,score:101}));
+assert.throws(()=>validateReview({...result,summary:null}));
+const input={image:'data:image/jpeg;base64,YQ==',context:'作品'};
+await assert.rejects(createReviewer({key:''})(input),/not_configured/);
+const calls=[];const reviewer=createReviewer({key:'test',fetchImpl:async(url,options)=>{const body=JSON.parse(options.body);calls.push(body);return {ok:true,json:async()=>({choices:[{message:{content:calls.length===1?'粉花绿叶':JSON.stringify(result)}}]})};}});
+const actual=await reviewer(input);assert.equal(actual.score,82);assert.equal(calls[0].model,VISION_MODEL);assert.equal(calls[1].model,REVIEW_MODEL);assert.equal(calls[0].messages[0].content[1].image_url.url,input.image);
+assert.equal((await reviewer(input)).cached,true);assert.equal(calls.length,2);
+await assert.rejects(reviewer({...input,context:'新作品'}),/busy/);
+await assert.rejects(createReviewer({key:'test',fetchImpl:async()=>({ok:false,status:429})})(input),/quota/);
+await assert.rejects(createReviewer({key:'test',fetchImpl:async()=>({ok:true,json:async()=>({choices:[]})})})(input),/empty_result/);
+console.log('PASS review: input limits, result validation, missing key, vision + DeepSeek pipeline, cache, rate limit, quota, empty response');

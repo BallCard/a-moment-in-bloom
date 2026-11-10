@@ -1,0 +1,47 @@
+# 依赖与构建产物（根目录 .gitignore 也覆盖 node_modules/、dist/）
+node_modules/
+dist/
+
+# 本地验证产物（截图、冒烟脚本输出）
+.verify/
+
+# 真实花材：原始 ZIP、任务记录、量测报告留在 assets/local/（不入库）；
+# 工作台实际加载的 GLB 与 manifest 入库，保证克隆后即可运行。
+# V9 起 27 种花材也是真实 Lux3D 模型（lux-<family>.glb），
+# 花材架静态缩略图（thumbs/<assetId>.png，53 张）一并入库。
+# V10 起 5 件 Lux3D 花器（vessels/*.glb）与其 manifest 一并入库。
+# V12 起 4 件 Lux3D 近景道具（props/*.glb）与其 manifest 一并入库。
+# V13 起 8 张拍照场景缩略图（scenes/<scene>.jpg，真实渲染）与封面手作图入库。
+/public/assets/*
+!/public/assets/.gitkeep
+!/public/assets/manifest.json
+!/public/assets/tulip-pink.glb
+!/public/assets/rose-pink.glb
+!/public/assets/eucalyptus-green.glb
+!/public/assets/lux-*.glb
+!/public/assets/thumbs/
+!/public/assets/thumbs/*.png
+!/public/assets/vessels/
+!/public/assets/vessels/*.glb
+!/public/assets/vessels/manifest.json
+!/public/assets/vessels/previews/
+!/public/assets/vessels/previews/*.jpg
+!/public/assets/props/
+!/public/assets/props/*.glb
+!/public/assets/props/manifest.json
+!/public/assets/scenes/
+!/public/assets/scenes/*.jpg
+!/public/assets/scenes/manifest.json
+# V16 背景音乐：ModelScope ACE-Step 真实生成并处理后入库，来源与 task id 见
+# docs/v16-music-api-record.md；生成脚本不随包发布凭据。
+!/public/assets/audio/
+!/public/assets/audio/*.mp3
+
+# 编辑器临时文件
+*.local.*
+.DS_Store
+
+# 本轮原创生成的人物头像，来源见 docs/character-assets.md
+!/public/assets/characters/
+/public/assets/characters/*
+!/public/assets/characters/*.webp

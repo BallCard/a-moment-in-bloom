@@ -1,0 +1,30 @@
+{
+  "name": "aholo-bouquet-workbench",
+  "private": true,
+  "version": "0.16.0",
+  "type": "module",
+  "description": "花间一刻 · 3D 花艺创作小游戏：选花、搭配、包装、拍照，把心意慢慢做成一束花。",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "smoke": "node scripts/iteration5.mjs",
+    "smoke:legacy": "node scripts/smoke.mjs",
+    "server": "node server/index.mjs",
+    "dev:all": "node scripts/start-local.mjs"
+  },
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/three": "^0.187.0",
+    "@vitejs/plugin-react": "^6.2.1",
+    "playwright-core": "^1.64.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5"
+  }
+}

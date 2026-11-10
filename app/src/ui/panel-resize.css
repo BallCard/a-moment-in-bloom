@@ -1,0 +1,162 @@
+/* =========================================================================
+   左右侧栏可拉伸把手（V16 第二轮）
+   奶油纸色底 + 墨绿高亮，沿用现有设计语言，不引入新配色。
+   宽度由 JS 写到 `.app` 的 --panel-left-w / --panel-right-w（默认值与断点
+   见 styles.css），这里只负责把手的可见性与状态。
+   ========================================================================= */
+
+.side-left,
+.side-right {
+  transition: width var(--t-control) var(--ease);
+}
+
+/* 把手：贴在面板内边缘的一条常驻命中区。18px 宽便于点中，视觉只有 2px 线 + 小握把。 */
+.panel-resize-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 4;
+  width: 18px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: col-resize;
+  touch-action: none;
+  pointer-events: auto;
+  outline: none;
+}
+
+.panel-resize-handle[data-side='left'] {
+  right: -9px;
+}
+
+.panel-resize-handle[data-side='right'] {
+  left: -9px;
+}
+
+/* 常驻细线：就算没 hover 也能看出「这里是面板边界、可以拉」。 */
+.panel-resize-handle::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  bottom: 14px;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--line-strong) 12%,
+    var(--line-strong) 88%,
+    transparent 100%
+  );
+  opacity: 0.4;
+  transition:
+    opacity var(--t-control) var(--ease),
+    width var(--t-control) var(--ease),
+    background var(--t-control) var(--ease);
+}
+
+/* 中间的握把：淡纸色小胶囊 + 竖排墨点，常驻可见。 */
+.panel-resize-handle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7px;
+  height: 46px;
+  transform: translate(-50%, -50%);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background-color: color-mix(in srgb, var(--paper-3) 86%, transparent);
+  background-image: radial-gradient(circle, rgba(94, 78, 60, 0.42) 1px, transparent 1.4px);
+  background-size: 7px 7px;
+  background-position: center;
+  box-shadow: var(--shadow-sm);
+  transition:
+    border-color var(--t-control) var(--ease),
+    background-color var(--t-control) var(--ease),
+    box-shadow var(--t-control) var(--ease),
+    transform var(--t-control) var(--ease);
+}
+
+/* hover / 聚焦 / 拖动：线变绿变粗，握把亮起来。 */
+.panel-resize-handle:hover::before,
+.panel-resize-handle:focus-visible::before,
+.panel-resize-handle[data-active='true']::before {
+  width: 3px;
+  opacity: 1;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--leaf-line) 12%,
+    var(--leaf-line) 88%,
+    transparent 100%
+  );
+}
+
+.panel-resize-handle:hover::after,
+.panel-resize-handle:focus-visible::after,
+.panel-resize-handle[data-active='true']::after {
+  border-color: var(--leaf-line);
+  background-color: color-mix(in srgb, var(--paper-3) 96%, transparent);
+  box-shadow:
+    0 0 0 2px rgba(63, 93, 74, 0.12),
+    var(--shadow-sm);
+}
+
+.panel-resize-handle:focus-visible::after {
+  border-color: var(--leaf);
+  box-shadow:
+    0 0 0 2px var(--leaf-soft),
+    0 0 0 3px var(--leaf-line);
+}
+
+.panel-resize-handle[data-active='true']::after {
+  transform: translate(-50%, -50%) scaleX(1.08);
+}
+
+/* 拖动中：全局 col-resize，且暂停宽度过渡，跟手不拖沓。 */
+.app[data-panel-resizing='true'] {
+  cursor: col-resize;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.app[data-panel-resizing='true'] .side-left,
+.app[data-panel-resizing='true'] .side-right {
+  transition: none;
+}
+
+/* 面板变宽只加空间，不放大文字与控件的字号（各面板字号本来就是固定 px）。 */
+.side-left,
+.side-right {
+  min-width: 0;
+}
+
+.side-right .right-stack {
+  min-width: 0;
+}
+
+/* 花材缩略图有上限：卡片从 113px 拉到 194px 时，图片保持接近默认宽度的
+   花头构图，而不是按 126% 无限放大（否则最宽处只剩一大块花头）。 */
+.side-left .shelf-thumb .model-thumbnail {
+  max-width: 168px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .side-left,
+  .side-right,
+  .panel-resize-handle::before,
+  .panel-resize-handle::after {
+    transition: none;
+  }
+}
+
+/* 窄屏：回到既有的固定布局，把手不显示（JS 那边也不会渲染）。 */
+@media (max-width: 760px) {
+  .panel-resize-handle {
+    display: none;
+  }
+}

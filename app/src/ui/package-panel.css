@@ -1,0 +1,666 @@
+/* =========================================================================
+   包装与花器面板（V13 收敛）—— 只作用于右栏包装面板，不改 styles.css。
+
+   层级：形态选择（8 项小预览）→ 纸片四步（摆纸 / 叠包 / 丝带 / 卡片）
+   → 卡片步骤聚焦祝福，其余折叠进「还想调一调」；花器分支只留插深/剪短、丝带、卡片。
+
+   注意：本文件由组件 import，在 styles.css 之前注入，所以覆盖旧类时统一加一层
+   作用域（.decor-panel / .right-panel-head）提高优先级，避免同权重被旧规则盖回。
+   ========================================================================= */
+
+/* ---------- 右栏顶部：标题 + 阶段说明 ---------- */
+
+.right-panel-head {
+  align-items: center;
+  gap: 8px;
+  padding: 7px 7px 7px 11px;
+}
+
+.right-panel-head .right-panel-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.right-panel-head .panel-tab {
+  flex: 0 0 auto;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.right-panel-head .right-panel-sub {
+  display: block;
+  font-size: 10.5px;
+  line-height: 1.45;
+  color: var(--muted);
+  letter-spacing: 0.01em;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- 面板主体 ---------- */
+
+.decor-panel.package-panel {
+  gap: 0;
+}
+
+.decor-panel .package-fields {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.decor-panel .package-fields[disabled] {
+  opacity: 0.96;
+}
+
+.decor-panel .package-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* ---------- 第一层：呈现形式 ---------- */
+
+.decor-panel .package-choice {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 2px;
+}
+
+.decor-panel .package-choice-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.decor-panel .package-choice-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+}
+
+.decor-panel .package-choice-hint {
+  font-size: 10px;
+  line-height: 1.4;
+  color: var(--muted);
+  text-align: right;
+  max-width: 62%;
+}
+
+.decor-panel .package-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.decor-panel .package-choice-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  padding: 5px 3px 4px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: rgba(255, 253, 247, 0.55);
+  cursor: pointer;
+  transition:
+    background var(--t-control) var(--ease),
+    border-color var(--t-control) var(--ease),
+    box-shadow var(--t-control) var(--ease),
+    transform 120ms var(--ease);
+}
+
+.decor-panel .package-choice-item:hover {
+  background: #fffdf8;
+  border-color: var(--leaf-line);
+  box-shadow: var(--shadow-sm);
+}
+
+.decor-panel .package-choice-item:active {
+  transform: translateY(1px);
+}
+
+.decor-panel .package-choice-item.is-on {
+  border-color: var(--leaf-line);
+  background: var(--leaf-soft);
+  box-shadow: inset 0 0 0 1px rgba(63, 93, 74, 0.12);
+}
+
+.decor-panel .package-choice-thumb {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f4eadc 0%, #e7d9c6 100%);
+  box-shadow: inset 0 1px 3px rgba(74, 55, 36, 0.12);
+}
+
+.decor-panel .package-choice-glyph {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 3px;
+  display: block;
+}
+
+.decor-panel .package-choice-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.decor-panel .package-choice-img[hidden] {
+  display: none;
+}
+
+.decor-panel .package-choice-label {
+  font-size: 10.5px;
+  line-height: 1.25;
+  color: var(--ink-soft);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.decor-panel .package-choice-item.is-on .package-choice-label {
+  color: var(--leaf-deep);
+  font-weight: 600;
+}
+
+/* ---------- 预览确认条 ---------- */
+
+.decor-panel .package-confirm {
+  margin-top: 8px;
+  padding: 9px 10px;
+  border: 1px solid var(--leaf-line);
+  border-radius: 11px;
+  background: var(--leaf-soft);
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.decor-panel .package-confirm p {
+  margin: 0 0 7px;
+}
+
+.decor-panel .package-confirm-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.decor-panel .package-confirm-actions .btn {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* ---------- 包装步骤 ---------- */
+
+.decor-panel .package-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+  margin: 10px 0 0;
+}
+
+.decor-panel .package-step-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-width: 0;
+  min-height: 32px;
+  padding: 0 2px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: rgba(255, 253, 247, 0.6);
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background var(--t-control) var(--ease),
+    border-color var(--t-control) var(--ease),
+    color var(--t-control) var(--ease);
+}
+
+.decor-panel .package-step-chip:hover {
+  background: #fffdf8;
+  border-color: var(--leaf-line);
+  color: var(--leaf-deep);
+}
+
+.decor-panel .package-step-chip .package-step-index {
+  display: grid;
+  place-items: center;
+  width: 15px;
+  height: 15px;
+  flex: 0 0 15px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+}
+
+.decor-panel .package-step-chip.is-on {
+  background: var(--leaf-soft);
+  border-color: var(--leaf-line);
+  color: var(--leaf-deep);
+  font-weight: 600;
+}
+
+.decor-panel .package-step-chip.is-on .package-step-index {
+  border-color: var(--leaf);
+  background: var(--leaf);
+  color: #fbf6ea;
+}
+
+.decor-panel .package-step-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- 花器流程提示 ---------- */
+
+.decor-panel .package-flow {
+  margin: 9px 0 0;
+  padding: 7px 9px;
+  border-radius: 9px;
+  background: rgba(239, 226, 209, 0.5);
+  color: var(--muted);
+  font-size: 10.5px;
+  line-height: 1.55;
+}
+
+/* ---------- 通用内容块 ---------- */
+
+.decor-panel .package-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 9px 9px 8px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 253, 247, 0.5);
+  min-width: 0;
+}
+
+.decor-panel .package-block.is-focus {
+  border-color: var(--leaf-line);
+  background: rgba(229, 236, 226, 0.42);
+  box-shadow: inset 0 0 0 1px rgba(63, 93, 74, 0.08);
+}
+
+.decor-panel .package-block.is-compact {
+  margin-top: 6px;
+  padding: 7px 8px 6px;
+}
+
+.decor-panel .package-block-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.decor-panel .package-block-title {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+}
+
+.decor-panel .package-block-hint {
+  font-size: 10px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ---------- 纸片列表 / 纸色 ---------- */
+
+.decor-panel .package-sheet-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 3px 0 1px;
+}
+
+.decor-panel .package-sheet-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 28px;
+  padding: 0 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 253, 247, 0.82);
+  color: var(--ink-soft);
+  font-size: 10.5px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    border-color var(--t-control) var(--ease),
+    background var(--t-control) var(--ease);
+}
+
+.decor-panel .package-sheet-chip:hover:not(:disabled) {
+  border-color: var(--leaf-line);
+  background: #fffdf8;
+}
+
+.decor-panel .package-sheet-chip.is-on {
+  border-color: var(--leaf-line);
+  background: var(--leaf-soft);
+  color: var(--leaf-deep);
+  font-weight: 600;
+}
+
+.decor-panel .package-sheet-chip.is-add {
+  border-style: dashed;
+  color: var(--muted);
+}
+
+.decor-panel .package-sheet-chip:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.decor-panel .package-sheet-dot {
+  width: 11px;
+  height: 11px;
+  flex: 0 0 11px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(122, 96, 72, 0.35);
+}
+
+.decor-panel .package-paper-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  margin: 5px 0 1px;
+}
+
+.decor-panel .package-paper-row .paper-dot {
+  width: 24px;
+  height: 24px;
+}
+
+/* ---------- 滑块 ---------- */
+
+.decor-panel .package-slider {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) 46px;
+  align-items: center;
+  gap: 7px;
+  margin: 5px 0;
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+.decor-panel .package-slider .slider-label {
+  white-space: nowrap;
+}
+
+.decor-panel .package-slider-stack {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2px;
+}
+
+/* ---------- 操作按钮 ---------- */
+
+.decor-panel .package-action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 4px;
+}
+
+.decor-panel .package-action-row .btn {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0 8px;
+}
+
+.decor-panel .package-text-button {
+  align-self: flex-start;
+  padding: 2px 0;
+  border: 0;
+  background: transparent;
+  color: var(--leaf-deep);
+  font-size: 10.5px;
+  line-height: 1.5;
+  text-decoration: underline;
+  text-decoration-color: rgba(63, 93, 74, 0.35);
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.decor-panel .package-text-button:disabled {
+  color: var(--muted);
+  text-decoration: none;
+  cursor: default;
+  opacity: 0.6;
+}
+
+/* ---------- 卡片（祝福编辑） ---------- */
+
+.decor-panel .package-card {
+  background: linear-gradient(180deg, #fffdf6 0%, #fdf4e6 100%);
+  border-color: rgba(154, 125, 93, 0.3);
+  box-shadow: 0 8px 20px rgba(90, 66, 42, 0.09);
+}
+
+.decor-panel .package-card.is-focus {
+  border-color: var(--leaf-line);
+  box-shadow:
+    inset 0 0 0 1px rgba(63, 93, 74, 0.1),
+    0 8px 20px rgba(90, 66, 42, 0.1);
+}
+
+.decor-panel .package-card-lead {
+  margin: 3px 0 6px;
+  font-size: 10.5px;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.decor-panel .package-card .field-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+  gap: 5px;
+  margin: 9px 0;
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+.decor-panel .package-card .field-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  letter-spacing: 0.03em;
+}
+
+.decor-panel .package-card-count {
+  font-size: 9.5px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.decor-panel .package-card .field-row textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 8px 9px;
+  border: 1px solid var(--line-strong);
+  border-radius: 9px;
+  background: rgba(255, 253, 247, 0.94);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.6;
+  resize: vertical;
+  transition:
+    border-color var(--t-control) var(--ease),
+    box-shadow var(--t-control) var(--ease),
+    background var(--t-control) var(--ease);
+}
+
+.decor-panel .package-card .field-row textarea::placeholder {
+  color: rgba(120, 108, 92, 0.55);
+}
+
+.decor-panel .package-card .field-row textarea:hover {
+  border-color: var(--leaf-line);
+  background: #fffdf8;
+}
+
+.decor-panel .package-card .field-row textarea:focus {
+  outline: none;
+  border-color: var(--leaf-line);
+  box-shadow: 0 0 0 2px rgba(63, 93, 74, 0.12);
+}
+
+/* ---------- 花器分支 ---------- */
+
+.decor-panel .package-vessel-stem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 4px;
+}
+
+.decor-panel .package-vessel-name {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--leaf-deep);
+  overflow-wrap: anywhere;
+}
+
+.decor-panel .package-vessel-pick {
+  margin-top: 2px;
+  color: var(--leaf-deep);
+}
+
+/* ---------- 「还想调一调」折叠区 ---------- */
+
+.decor-panel .package-more {
+  margin-top: 10px;
+  border-top: 1px dashed var(--line);
+  padding-top: 2px;
+}
+
+.decor-panel .package-more > summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 2px;
+  color: var(--leaf-deep);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  list-style: none;
+}
+
+.decor-panel .package-more > summary::-webkit-details-marker {
+  display: none;
+}
+
+.decor-panel .package-more > summary::before {
+  content: '＋';
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  border-radius: 50%;
+  border: 1px solid var(--leaf-line);
+  font-size: 10px;
+  line-height: 1;
+}
+
+.decor-panel .package-more[open] > summary::before {
+  content: '－';
+}
+
+.decor-panel .package-more-body {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 2px;
+}
+
+.decor-panel .package-more-body .package-block:first-child {
+  margin-top: 4px;
+}
+
+/* ---------- 窄屏：391px 下也不横向溢出 ---------- */
+
+@media (max-width: 520px) {
+  .right-panel-head {
+    padding: 6px 6px 6px 9px;
+  }
+
+  .right-panel-head .right-panel-sub {
+    font-size: 10px;
+  }
+
+  .decor-panel .package-choice-grid {
+    gap: 4px;
+  }
+
+  .decor-panel .package-choice-item {
+    padding: 4px 2px 3px;
+  }
+
+  .decor-panel .package-choice-label {
+    font-size: 9.5px;
+  }
+
+  .decor-panel .package-choice-hint {
+    display: none;
+  }
+
+  .decor-panel .package-step-chip {
+    min-height: 30px;
+    font-size: 10px;
+  }
+
+  .decor-panel .package-slider {
+    grid-template-columns: 48px minmax(0, 1fr) 42px;
+    font-size: 10.5px;
+  }
+
+  .decor-panel .package-block {
+    padding: 8px 7px 7px;
+  }
+}

@@ -1,0 +1,525 @@
+/* =========================================================================
+   居中节点状态栏
+   把顶部三节点阶段切换与左侧心意卡合并成一条常驻状态栏：
+   上/左侧是阶段节点，右侧是当前心愿（人物、来信标题、进度环、当前要求）。
+   独立文件：相册等其它面板仍共用 styles.css。
+   ========================================================================= */
+
+.node-status-bar {
+  position: absolute;
+  top: 82px;
+  left: 50%;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(700px, calc(100vw - 48px));
+  padding: 7px 12px 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--paper-2) 90%, transparent);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px) saturate(1.05);
+  -webkit-backdrop-filter: blur(16px) saturate(1.05);
+  transform: translateX(-50%);
+  pointer-events: auto;
+  animation: rail-in var(--t-panel) var(--ease) both;
+}
+
+.node-status-bar[data-mode='free'] {
+  width: max-content;
+  max-width: calc(100vw - 48px);
+  padding-right: 8px;
+}
+
+@keyframes rail-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -7px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.app[data-motion='reduced'] .node-status-bar {
+  animation: none;
+}
+
+/* ---------- 阶段节点 ---------- */
+
+.rail-nodes {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.rail-node-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.rail-node {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background var(--t-control) var(--ease),
+    color var(--t-control) var(--ease),
+    border-color var(--t-control) var(--ease);
+}
+
+.rail-node:hover:not(:disabled) {
+  background: rgba(255, 253, 247, 0.82);
+  color: var(--leaf-deep);
+}
+
+.rail-node:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+.rail-node-num {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  color: var(--muted);
+  font-size: 10.5px;
+  font-variant-numeric: tabular-nums;
+  transition:
+    background var(--t-control) var(--ease),
+    border-color var(--t-control) var(--ease),
+    color var(--t-control) var(--ease);
+}
+
+.rail-node.is-on {
+  background: var(--leaf);
+  color: #fbf6ea;
+  box-shadow: 0 3px 12px rgba(51, 74, 59, 0.26);
+}
+
+.rail-node.is-on .rail-node-num {
+  border-color: transparent;
+  background: #fbf6ea;
+  color: var(--leaf-deep);
+}
+
+.rail-node.is-done {
+  color: var(--leaf-deep);
+}
+
+.rail-node.is-done .rail-node-num {
+  border-color: var(--leaf-line);
+  background: var(--leaf-soft);
+  color: var(--leaf-deep);
+}
+
+.rail-node-line {
+  display: block;
+  width: 24px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(94, 78, 60, 0.16);
+  transition: background var(--t-panel) var(--ease);
+}
+
+.rail-node-line[data-done='true'] {
+  background: linear-gradient(90deg, #7d9a80, var(--leaf));
+}
+
+/* 悬停/键盘聚焦时的阶段说明（只解释，不弹教学窗） */
+.rail-node::after {
+  content: attr(data-hint);
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  z-index: 6;
+  padding: 4px 9px;
+  border-radius: 8px;
+  background: rgba(59, 50, 42, 0.9);
+  color: #f7efdd;
+  font-size: 10.5px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -2px);
+  transition:
+    opacity 140ms var(--ease),
+    transform 140ms var(--ease);
+}
+
+.rail-node:hover::after,
+.rail-node:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* ---------- 心愿段 ---------- */
+
+.rail-wish {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding-left: 12px;
+  border-left: 1px solid var(--line);
+}
+
+.rail-wish-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.node-status-bar[data-mode='commission'] .rail-wish-checkline {
+  height: 22px;
+}
+
+.rail-wish .customer-portrait.is-small {
+  width: 30px;
+  height: 34px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+}
+
+.rail-wish-identity {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  line-height: 1.25;
+}
+
+.rail-wish-identity span {
+  color: var(--muted);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+}
+
+.rail-wish-identity strong {
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rail-wish-identity:hover strong {
+  color: var(--leaf-deep);
+}
+
+.rail-wish .wish-ring {
+  position: relative;
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+}
+
+.rail-wish .wish-ring svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.rail-wish .wish-ring circle {
+  fill: none;
+  stroke: #e2d7c5;
+  stroke-width: 3.4;
+}
+
+.rail-wish .wish-ring .wish-ring-value {
+  stroke: var(--leaf);
+  stroke-linecap: round;
+  transition: stroke-dasharray 300ms var(--ease);
+}
+
+.rail-wish .wish-ring span {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--ink-soft);
+  font-size: 9.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.rail-expand {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex: 0 0 auto;
+  height: 28px;
+  padding: 0 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 253, 247, 0.72);
+  color: var(--muted);
+  font-size: 11px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background var(--t-control) var(--ease),
+    border-color var(--t-control) var(--ease),
+    color var(--t-control) var(--ease);
+}
+
+.rail-expand:hover {
+  border-color: var(--leaf-line);
+  background: #fffdf8;
+  color: var(--leaf-deep);
+}
+
+.rail-expand span {
+  width: 0;
+  height: 0;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  border-top: 5px solid currentColor;
+  transition: transform 160ms var(--ease);
+}
+
+.rail-expand[aria-expanded='true'] span {
+  transform: rotate(180deg);
+}
+
+.rail-check {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+
+.rail-check > span:first-child {
+  flex: 0 0 auto;
+  color: #b08a5f;
+  font-size: 10.5px;
+}
+
+.rail-check > span:first-child.is-met {
+  color: var(--leaf);
+}
+
+.rail-check-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.rail-response {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  color: var(--ink-soft);
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.rail-arrow {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--clay-soft);
+  color: #594d3e;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.rail-arrow:hover {
+  background: #e6d5bf;
+  color: var(--leaf-deep);
+}
+
+/* ---------- 展开的完整来信 ---------- */
+
+.rail-letter {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 6;
+  width: min(430px, calc(100vw - 32px));
+  padding: 13px 15px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--paper-2) 97%, transparent);
+  box-shadow: var(--shadow-lift);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: var(--ink-soft);
+  font-size: 12px;
+  line-height: 1.75;
+  animation: rail-letter-in 180ms var(--ease) both;
+  pointer-events: auto;
+}
+
+@keyframes rail-letter-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.app[data-motion='reduced'] .rail-letter {
+  animation: none;
+}
+
+.rail-letter blockquote {
+  margin: 0 0 9px;
+  padding: 8px 10px;
+  border-left: 2px solid var(--clay);
+  border-radius: 0 8px 8px 0;
+  background: rgba(255, 253, 247, 0.68);
+  color: var(--ink);
+  font-size: 12px;
+}
+
+.rail-letter ul {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0 0 11px;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+  font-size: 11.5px;
+}
+
+.rail-letter-response {
+  margin: 0 0 9px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--leaf-soft);
+  color: var(--leaf-deep);
+  font-size: 11.5px;
+  line-height: 1.7;
+}
+
+.rail-letter li[data-met='true'] {
+  color: var(--leaf-deep);
+}
+
+.rail-letter-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* 状态栏下移已有的居中轻提示，避免叠在一起 */
+.node-status-bar ~ .placement-banner {
+  top: 192px;
+}
+
+.node-status-bar ~ .asset-status {
+  top: 192px;
+}
+
+/* 窄屏：状态栏改为两段式（节点一排、心愿一排），并压缩文字 */
+@media (max-width: 1340px) {
+  .node-status-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    width: min(480px, calc(100vw - 32px));
+  }
+
+  .node-status-bar[data-mode='free'] {
+    width: max-content;
+    max-width: calc(100vw - 32px);
+  }
+
+  .rail-nodes {
+    justify-content: center;
+  }
+
+  .rail-wish {
+    padding-top: 5px;
+    padding-left: 0;
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .rail-letter {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    animation-name: rail-letter-in-stacked;
+  }
+
+  @keyframes rail-letter-in-stacked {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -4px);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  .app[data-motion='reduced'] .rail-letter {
+    animation: none;
+  }
+
+  /* 两段式更高，轻提示继续下移 */
+  .node-status-bar ~ .placement-banner,
+  .node-status-bar ~ .asset-status {
+    top: 208px;
+  }
+}
+
+@media (max-width: 520px) {
+  .rail-node {
+    padding: 0 7px;
+    font-size: 11.5px;
+  }
+
+  .rail-node-line {
+    width: 14px;
+  }
+}

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f5ecdf" />
+  <meta name="description" content="花间一刻，一款从选花到拍照的 3D 花艺创作小游戏。为自己搭一束喜欢的花，也为一封来信做一份心意。" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./brand/icon-32.png" />
+  <title>关于花间一刻 · 把心意，慢慢做成一束花</title>
+  <style>
+    :root { color-scheme: light; --ink:#294c3b; --text:#4d5145; --muted:#747768; --line:#294c3b25; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#f5ecdf; color:var(--text); font-family:"Microsoft YaHei","PingFang SC",sans-serif; line-height:1.9; }
+    a { color:var(--ink); text-underline-offset:5px; }
+    a:focus-visible { outline:2px solid var(--ink); outline-offset:5px; }
+    .page { max-width:1120px; margin:auto; padding:32px 52px 28px; }
+    nav { display:flex; justify-content:space-between; align-items:center; gap:20px; padding-bottom:20px; border-bottom:1px solid var(--line); font-size:13px; }
+    .small-brand { display:flex; align-items:center; gap:10px; text-decoration:none; font-weight:700; letter-spacing:.12em; }
+    .small-brand img { width:38px; height:38px; object-fit:contain; }
+    .hero { display:grid; grid-template-columns:1fr 220px; align-items:center; gap:50px; padding:60px 0 42px; }
+    .eyebrow { margin:0 0 10px; color:var(--muted); letter-spacing:.24em; font-size:12px; }
+    h1 { margin:0; color:var(--ink); font-family:"Noto Serif SC","Songti SC",SimSun,serif; font-size:clamp(48px,7vw,76px); line-height:1.35; letter-spacing:.13em; font-weight:500; }
+    .english { margin:10px 0 25px; font-family:Georgia,serif; font-style:italic; letter-spacing:.09em; color:var(--muted); font-size:17px; }
+    .tagline { color:var(--ink); font-size:clamp(19px,3vw,26px); margin:0 0 16px; font-weight:500; }
+    .intro { max-width:570px; margin:0; font-size:15px; }
+    .hero-logo { display:block; width:220px; height:270px; object-fit:contain; }
+    .cta { display:inline-block; padding:10px 24px; border-radius:4px; background:var(--ink); color:#fffaf2; margin-top:25px; text-decoration:none; font-size:14px; }
+    .flow { display:flex; flex-wrap:wrap; align-items:center; gap:10px 20px; padding:18px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); font-size:14px; color:var(--ink); }
+    .flow span { color:var(--muted); font-size:12px; }
+    .features { display:grid; grid-template-columns:repeat(3,1fr); gap:32px; padding:30px 0 32px; }
+    .number { font-family:Georgia,serif; color:#a98267; font-style:italic; font-size:17px; }
+    h2 { font-size:17px; color:var(--ink); margin:6px 0 10px; font-weight:600; }
+    .features p { font-size:14px; margin:0; }
+    .note { border-top:1px solid var(--line); padding-top:20px; display:grid; grid-template-columns:1fr 1fr; gap:30px; font-size:12px; color:var(--muted); }
+    .note p { margin:0; }
+    footer { padding-top:22px; color:var(--muted); font-size:11px; letter-spacing:.04em; }
+    @media(max-width:650px) {
+      .page { padding:20px 24px; }
+      nav { font-size:12px; }
+      .hero { grid-template-columns:1fr; gap:12px; padding:30px 0; }
+      .hero-logo { grid-row:1; width:115px; height:140px; margin:auto; }
+      .english { font-size:15px; margin-bottom:20px; }
+      .features,.note { grid-template-columns:1fr; gap:24px; }
+      .features { padding:26px 0; }
+      .flow { gap:10px 12px; font-size:13px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <nav aria-label="作品导航">
+      <a class="small-brand" href="./"><img src="./brand/icon-64.png" alt="" width="38" height="38" />花间一刻</a>
+      <span>3D 花艺创作小游戏</span>
+    </nav>
+    <section class="hero" aria-labelledby="product-name">
+      <div>
+        <p class="eyebrow">留一点时间，给喜欢的花</p>
+        <h1 id="product-name">花间一刻</h1>
+        <p class="english" lang="en">A Moment in Bloom</p>
+        <p class="tagline">把心意，慢慢做成一束花。</p>
+        <p class="intro">在一间温暖的花艺工作室里，从第一枝花开始，挑选颜色、调整高低、搭配枝叶，再包上纸、系好丝带、写一张卡片。为自己做一束喜欢的花，也为一封来信做一份心意。</p>
+        <a class="cta" href="./">进入花艺工作室 →</a>
+      </div>
+      <img class="hero-logo" src="./brand/logo.png" alt="折纸托住三枝花组成的花间一刻标志" width="220" height="270" />
+    </section>
+    <div class="flow" aria-label="创作流程">选花搭配 <span>→</span> 包装装饰 <span>→</span> 拍照留念 <span>· 一束花，从头做到喜欢</span></div>
+    <section class="features" aria-label="你可以怎样玩">
+      <article><span class="number">01 / Create</span><h2>亲手搭配，慢慢找到感觉</h2><p>旋转查看立体花束，逐枝调整位置、高低和角度，修剪支持的茎叶。让颜色与层次在一次次尝试中变成自己的选择。</p></article>
+      <article><span class="number">02 / Make a wish</span><h2>自由创作，也回应一份心愿</h2><p>随心做花，或接下一封生日、乔迁、纪念日的来信。从花材到卡片，把顾客的小小愿望做进成品里。</p></article>
+      <article><span class="number">03 / Keep</span><h2>包好心意，留住这一刻</h2><p>选择纸包、花瓶或陶罐，搭配丝带和卡片，再选一处光线拍照。同一作品可拍多张照片，存进本机相册，或导出图片。</p></article>
+    </section>
+    <aside class="note" aria-label="体验说明">
+      <p><strong>想听听建议时，再请 AI 来看看。</strong><br />点击 AI 点评，会将成品照片和花材资料发送至魔搭的视觉模型与 DeepSeek 1017，获得优点与调整建议。审美评分仅供参考；人物心愿由明确条件判定。</p>
+      <p><strong>适合桌面浏览器，作品保存在本机。</strong><br />推荐使用电脑 Chrome / Edge。相册保存在当前浏览器，清理网站数据可能丢失作品；重要照片请导出留存。当前为 V8 原型，支持相册备份与恢复，仍在打磨。</p>
+    </aside>
+    <footer>花间一刻 · A Moment in Bloom &nbsp; / &nbsp; Aholo 2026 黑客松参赛项目</footer>
+  </main>
+</body>
+</html>

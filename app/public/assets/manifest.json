@@ -1,0 +1,1452 @@
+{
+  "schema_version": 1,
+  "assetsVersion": "2026-11-10.lux3d-hydrangea-orchid",
+  "generated_at": "2026-11-10T11:45:43+0800",
+  "generator": "scripts/flower_glb_pipeline.py manifest（1.1）",
+  "assets": [
+    {
+      "id": "rose-pink",
+      "kind": "main",
+      "displayName": "玫瑰 · 粉",
+      "glb": "rose-pink.glb",
+      "transform": {
+        "scale": 1.0,
+        "rotationY": 0.0,
+        "gripAt": -0.205,
+        "headOffsetY": 0.36236
+      },
+      "fallback": {
+        "procedural": "rose",
+        "color": "#e8a0b4"
+      },
+      "thumb": "thumbs/rose-pink.png"
+    },
+    {
+      "id": "rose-ivory",
+      "kind": "main",
+      "displayName": "玫瑰 · 象牙白",
+      "glb": "rose-pink.glb",
+      "transform": {
+        "scale": 1.0,
+        "rotationY": 0.0,
+        "gripAt": -0.205,
+        "headOffsetY": 0.36236
+      },
+      "fallback": {
+        "procedural": "rose",
+        "color": "#f1e5d7"
+      },
+      "recolor": "petals",
+      "thumb": "thumbs/rose-ivory.png"
+    },
+    {
+      "id": "rose-red",
+      "kind": "main",
+      "displayName": "玫瑰 · 深红",
+      "glb": "rose-pink.glb",
+      "transform": {
+        "scale": 1.0,
+        "rotationY": 0.0,
+        "gripAt": -0.205,
+        "headOffsetY": 0.36236
+      },
+      "fallback": {
+        "procedural": "rose",
+        "color": "#a84059"
+      },
+      "recolor": "petals",
+      "thumb": "thumbs/rose-red.png"
+    },
+    {
+      "id": "tulip-pink",
+      "kind": "main",
+      "displayName": "郁金香 · 粉",
+      "glb": "tulip-pink.glb",
+      "transform": {
+        "scale": 0.93333,
+        "rotationY": 0.0,
+        "gripAt": -0.19,
+        "headOffsetY": 0.34313
+      },
+      "fallback": {
+        "procedural": "tulip",
+        "color": "#e8a0b4"
+      },
+      "thumb": "thumbs/tulip-pink.png"
+    },
+    {
+      "id": "tulip-cream",
+      "kind": "main",
+      "displayName": "郁金香 · 奶油",
+      "glb": "tulip-pink.glb",
+      "transform": {
+        "scale": 0.93333,
+        "rotationY": 0.0,
+        "gripAt": -0.19,
+        "headOffsetY": 0.34313
+      },
+      "fallback": {
+        "procedural": "tulip",
+        "color": "#f1e0c6"
+      },
+      "recolor": "petals",
+      "thumb": "thumbs/tulip-cream.png"
+    },
+    {
+      "id": "tulip-butter",
+      "kind": "main",
+      "displayName": "郁金香 · 鹅黄",
+      "glb": "tulip-pink.glb",
+      "transform": {
+        "scale": 0.93333,
+        "rotationY": 0.0,
+        "gripAt": -0.19,
+        "headOffsetY": 0.34313
+      },
+      "fallback": {
+        "procedural": "tulip",
+        "color": "#e9bc4f"
+      },
+      "recolor": "petals",
+      "thumb": "thumbs/tulip-butter.png"
+    },
+    {
+      "id": "eucalyptus-green",
+      "kind": "greenery",
+      "displayName": "尤加利 · 银绿",
+      "glb": "eucalyptus-green.glb",
+      "transform": {
+        "scale": 0.83333,
+        "rotationY": 0.0,
+        "gripAt": -0.235,
+        "headOffsetY": 0.40112
+      },
+      "fallback": {
+        "procedural": "eucalyptus",
+        "color": "#a8bfa0"
+      },
+      "thumb": "thumbs/eucalyptus-green.png"
+    },
+    {
+      "id": "eucalyptus-silver",
+      "kind": "greenery",
+      "displayName": "尤加利 · 银绿",
+      "glb": "eucalyptus-green.glb",
+      "transform": {
+        "scale": 0.83333,
+        "rotationY": 0.0,
+        "gripAt": -0.235,
+        "headOffsetY": 0.40112
+      },
+      "fallback": {
+        "procedural": "eucalyptus",
+        "color": "#b9c6b4"
+      },
+      "recolor": "foliage",
+      "thumb": "thumbs/eucalyptus-silver.png"
+    },
+    {
+      "id": "eucalyptus-deep",
+      "kind": "greenery",
+      "displayName": "尤加利 · 深绿",
+      "glb": "eucalyptus-green.glb",
+      "transform": {
+        "scale": 0.83333,
+        "rotationY": 0.0,
+        "gripAt": -0.235,
+        "headOffsetY": 0.40112
+      },
+      "fallback": {
+        "procedural": "eucalyptus",
+        "color": "#6f8e6b"
+      },
+      "recolor": "foliage",
+      "thumb": "thumbs/eucalyptus-deep.png"
+    },
+    {
+      "id": "peony-1",
+      "kind": "main",
+      "displayName": "牡丹 · 藕粉",
+      "glb": "lux-peony.glb",
+      "thumb": "thumbs/peony-1.png",
+      "transform": {
+        "scale": 0.833333,
+        "rotationY": 0.0,
+        "gripAt": -0.23,
+        "headOffsetY": 0.401565
+      },
+      "fallback": {
+        "procedural": "peony",
+        "color": "#e6a9bd"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.2
+      }
+    },
+    {
+      "id": "peony-2",
+      "kind": "main",
+      "displayName": "牡丹 · 象牙",
+      "glb": "lux-peony.glb",
+      "thumb": "thumbs/peony-2.png",
+      "transform": {
+        "scale": 0.833333,
+        "rotationY": 0.0,
+        "gripAt": -0.23,
+        "headOffsetY": 0.401565
+      },
+      "fallback": {
+        "procedural": "peony",
+        "color": "#f3e6d8"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.2
+      },
+      "recolor": {
+        "mode": "petals",
+        "hue": [
+          280,
+          40
+        ]
+      }
+    },
+    {
+      "id": "herbaceous-peony-1",
+      "kind": "main",
+      "displayName": "芍药 · 浅粉",
+      "glb": "lux-herbaceous-peony.glb",
+      "thumb": "thumbs/herbaceous-peony-1.png",
+      "transform": {
+        "scale": 0.833333,
+        "rotationY": 0.0,
+        "gripAt": -0.23,
+        "headOffsetY": 0.405019
+      },
+      "fallback": {
+        "procedural": "herbaceous-peony",
+        "color": "#f0b9c8"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.19524
+      }
+    },
+    {
+      "id": "herbaceous-peony-2",
+      "kind": "main",
+      "displayName": "芍药 · 玫粉",
+      "glb": "lux-herbaceous-peony.glb",
+      "thumb": "thumbs/herbaceous-peony-2.png",
+      "transform": {
+        "scale": 0.833333,
+        "rotationY": 0.0,
+        "gripAt": -0.23,
+        "headOffsetY": 0.405019
+      },
+      "fallback": {
+        "procedural": "herbaceous-peony",
+        "color": "#d97b96"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.19524
+      },
+      "recolor": {
+        "mode": "petals",
+        "hue": [
+          284,
+          44
+        ]
+      }
+    },
+    {
+      "id": "carnation-1",
+      "kind": "main",
+      "displayName": "康乃馨 · 珊瑚粉",
+      "glb": "lux-carnation.glb",
+      "thumb": "thumbs/carnation-1.png",
+      "transform": {
+        "scale": 1.111111,
+        "rotationY": 0.0,
+        "gripAt": -0.23,
+        "headOffsetY": 0.413368
+      },
+      "fallback": {
+        "procedural": "carnation",
+        "color": "#ef9f9a"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.1408
+      }
+    },
+    {
+      "id": "carnation-2",
+      "kind": "main",
+      "displayName": "康乃馨 · 奶白",
+      "glb": "lux-carnation.glb",
+      "thumb": "thumbs/carnation-2.png",
+      "transform": {
+        "scale": 1.111111,
+        "rotationY": 0.0,
+        "gripAt": -0.23,
+        "headOffsetY": 0.413368
+      },
+      "fallback": {
+        "procedural": "carnation",
+        "color": "#f6ece0"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.1408
+      },
+      "recolor": {
+        "mode": "petals",
+        "hue": [
+          304,
+          64
+        ]
+      }
+    },
+    {
+      "id": "lily-1",
+      "kind": "main",
+      "displayName": "百合 · 米白",
+      "glb": "lux-lily.glb",
+      "thumb": "thumbs/lily-1.png",
+      "transform": {
+        "scale": 0.625,
+        "rotationY": 0.0,
+        "gripAt": -0.23,
+        "headOffsetY": 0.41422
+      },
+      "fallback": {
+        "procedural": "lily",
+        "color": "#f7f0e2"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.12921
+      },
+      "recolor": {
+        "mode": "petals",
+        "hue": [
+          286,
+          46
+        ]
+      }
+    },
+    {
+      "id": "lily-2",
+      "kind": "main",
+      "displayName": "百合 · 淡粉",
+      "glb": "lux-lily.glb",
+      "thumb": "thumbs/lily-2.png",
+      "transform": {
+        "scale": 0.625,
+        "rotationY": 0.0,
+        "gripAt": -0.23,
+        "headOffsetY": 0.41422
+      },
+      "fallback": {
+        "procedural": "lily",
+        "color": "#eec3cd"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.12921
+      }
+    },
+    {
+      "id": "sunflower-1",
+      "kind": "main",
+      "displayName": "向日葵 · 明黄",
+      "glb": "lux-sunflower.glb",
+      "thumb": "thumbs/sunflower-1.png",
+      "transform": {
+        "scale": 0.625,
+        "rotationY": 0.0,
+        "gripAt": -0.23,
+        "headOffsetY": 0.403015
+      },
+      "fallback": {
+        "procedural": "sunflower",
+        "color": "#e8b437"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.15155
+      },
+      "recolor": {
+        "mode": "petals",
+        "hue": [
+          346,
+          69
+        ]
+      }
+    },
+    {
+      "id": "sunflower-2",
+      "kind": "main",
+      "displayName": "向日葵 · 柠檬",
+      "glb": "lux-sunflower.glb",
+      "thumb": "thumbs/sunflower-2.png",
+      "transform": {
+        "scale": 0.625,
+        "rotationY": 0.0,
+        "gripAt": -0.23,
+        "headOffsetY": 0.403015
+      },
+      "fallback": {
+        "procedural": "sunflower",
+        "color": "#f0cd5c"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.15155
+      }
+    },
+    {
+      "id": "dahlia-1",
+      "kind": "main",
+      "displayName": "大丽花 · 酒红",
+      "glb": "lux-dahlia.glb",
+      "thumb": "thumbs/dahlia-1.png",
+      "transform": {
+        "scale": 1.666667,
+        "rotationY": 0.0,
+        "gripAt": -0.23,
+        "headOffsetY": 0.388135
+      },
+      "fallback": {
+        "procedural": "dahlia",
+        "color": "#b24a5e"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.17623
+      },
+      "recolor": {
+        "mode": "petals",
+        "hue": [
+          317,
+          77
+        ]
+      }
+    },
+    {
+      "id": "dahlia-2",
+      "kind": "main",
+      "displayName": "大丽花 · 蜜桃",
+      "glb": "lux-dahlia.glb",
+      "thumb": "thumbs/dahlia-2.png",
+      "transform": {
+        "scale": 1.666667,
+        "rotationY": 0.0,
+        "gripAt": -0.23,
+        "headOffsetY": 0.388135
+      },
+      "fallback": {
+        "procedural": "dahlia",
+        "color": "#eda183"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.17623
+      }
+    },
+    {
+      "id": "calla-1",
+      "kind": "main",
+      "displayName": "马蹄莲 · 象牙",
+      "glb": "lux-calla.glb",
+      "thumb": "thumbs/calla-1.png",
+      "transform": {
+        "scale": 0.833333,
+        "rotationY": 0.0,
+        "gripAt": -0.23,
+        "headOffsetY": 0.411995
+      },
+      "fallback": {
+        "procedural": "calla",
+        "color": "#f4efe2"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.08972
+      },
+      "recolor": {
+        "mode": "petals",
+        "hue": [
+          219,
+          339
+        ]
+      }
+    },
+    {
+      "id": "calla-2",
+      "kind": "main",
+      "displayName": "马蹄莲 · 深紫",
+      "glb": "lux-calla.glb",
+      "thumb": "thumbs/calla-2.png",
+      "transform": {
+        "scale": 0.833333,
+        "rotationY": 0.0,
+        "gripAt": -0.23,
+        "headOffsetY": 0.411995
+      },
+      "fallback": {
+        "procedural": "calla",
+        "color": "#6f5a7a"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.08972
+      }
+    },
+    {
+      "id": "hydrangea-1",
+      "kind": "main",
+      "displayName": "绣球 · 天蓝",
+      "glb": "lux-hydrangea.glb",
+      "thumb": "thumbs/hydrangea-1.png",
+      "transform": {
+        "scale": 1.111111,
+        "rotationY": 0.0,
+        "gripAt": -0.23,
+        "headOffsetY": 0.40441
+      },
+      "fallback": {
+        "procedural": "hydrangea",
+        "color": "#a8bfd8"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.18493
+      }
+    },
+    {
+      "id": "hydrangea-2",
+      "kind": "main",
+      "displayName": "绣球 · 藕粉",
+      "glb": "lux-hydrangea.glb",
+      "thumb": "thumbs/hydrangea-2.png",
+      "transform": {
+        "scale": 1.111111,
+        "rotationY": 0.0,
+        "gripAt": -0.23,
+        "headOffsetY": 0.40441
+      },
+      "fallback": {
+        "procedural": "hydrangea",
+        "color": "#e3b8c6"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.18493
+      },
+      "recolor": {
+        "mode": "petals",
+        "hue": [
+          151,
+          271
+        ]
+      }
+    },
+    {
+      "id": "orchid-1",
+      "kind": "main",
+      "displayName": "蝴蝶兰 · 白",
+      "glb": "lux-orchid.glb",
+      "thumb": "thumbs/orchid-1.png",
+      "transform": {
+        "scale": 0.769231,
+        "rotationY": 0.0,
+        "gripAt": -0.23,
+        "headOffsetY": 0.392274
+      },
+      "fallback": {
+        "procedural": "orchid",
+        "color": "#f4efe9"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.09011
+      }
+    },
+    {
+      "id": "orchid-2",
+      "kind": "main",
+      "displayName": "蝴蝶兰 · 紫",
+      "glb": "lux-orchid.glb",
+      "thumb": "thumbs/orchid-2.png",
+      "transform": {
+        "scale": 0.769231,
+        "rotationY": 0.0,
+        "gripAt": -0.23,
+        "headOffsetY": 0.392274
+      },
+      "fallback": {
+        "procedural": "orchid",
+        "color": "#cdb9dc"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.09011
+      },
+      "recolor": {
+        "mode": "petals",
+        "hue": [
+          303,
+          69
+        ]
+      }
+    },
+    {
+      "id": "daisy-gold",
+      "kind": "main",
+      "displayName": "非洲菊 · 杏黄",
+      "glb": "lux-daisy.glb",
+      "thumb": "thumbs/daisy-gold.png",
+      "transform": {
+        "scale": 1.111111,
+        "rotationY": 0.0,
+        "gripAt": -0.23,
+        "headOffsetY": 0.406589
+      },
+      "fallback": {
+        "procedural": "daisy",
+        "color": "#e7ae4b"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.13361
+      }
+    },
+    {
+      "id": "daisy-cream",
+      "kind": "main",
+      "displayName": "非洲菊 · 奶白",
+      "glb": "lux-daisy.glb",
+      "thumb": "thumbs/daisy-cream.png",
+      "transform": {
+        "scale": 1.111111,
+        "rotationY": 0.0,
+        "gripAt": -0.23,
+        "headOffsetY": 0.406589
+      },
+      "fallback": {
+        "procedural": "daisy",
+        "color": "#f5e7d0"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.13361
+      },
+      "recolor": {
+        "mode": "petals",
+        "hue": [
+          338,
+          69
+        ]
+      }
+    },
+    {
+      "id": "spray-rose-pink",
+      "kind": "filler",
+      "displayName": "多头玫瑰 · 莓粉",
+      "glb": "lux-spray.glb",
+      "thumb": "thumbs/spray-rose-pink.png",
+      "transform": {
+        "scale": 0.55906,
+        "rotationY": 0.0,
+        "gripAt": -0.21,
+        "headOffsetY": 0.38362
+      },
+      "fallback": {
+        "procedural": "spray",
+        "color": "#ce7896"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.14762
+      }
+    },
+    {
+      "id": "lisianthus-1",
+      "kind": "filler",
+      "displayName": "洋桔梗 · 浅紫",
+      "glb": "lux-lisianthus.glb",
+      "thumb": "thumbs/lisianthus-1.png",
+      "transform": {
+        "scale": 0.766667,
+        "rotationY": 0.0,
+        "gripAt": -0.21,
+        "headOffsetY": 0.368425
+      },
+      "fallback": {
+        "procedural": "lisianthus",
+        "color": "#cdb9dc"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.15232
+      }
+    },
+    {
+      "id": "lisianthus-2",
+      "kind": "filler",
+      "displayName": "洋桔梗 · 白",
+      "glb": "lux-lisianthus.glb",
+      "thumb": "thumbs/lisianthus-2.png",
+      "transform": {
+        "scale": 0.766667,
+        "rotationY": 0.0,
+        "gripAt": -0.21,
+        "headOffsetY": 0.368425
+      },
+      "fallback": {
+        "procedural": "lisianthus",
+        "color": "#f4efe9"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.15232
+      },
+      "recolor": {
+        "mode": "petals",
+        "hue": [
+          214,
+          334
+        ]
+      }
+    },
+    {
+      "id": "alstroemeria-1",
+      "kind": "filler",
+      "displayName": "六出花 · 粉橘",
+      "glb": "lux-alstroemeria.glb",
+      "thumb": "thumbs/alstroemeria-1.png",
+      "transform": {
+        "scale": 0.766667,
+        "rotationY": 0.0,
+        "gripAt": -0.21,
+        "headOffsetY": 0.365734
+      },
+      "fallback": {
+        "procedural": "alstroemeria",
+        "color": "#eaa07a"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.13276
+      }
+    },
+    {
+      "id": "alstroemeria-2",
+      "kind": "filler",
+      "displayName": "六出花 · 淡粉",
+      "glb": "lux-alstroemeria.glb",
+      "thumb": "thumbs/alstroemeria-2.png",
+      "transform": {
+        "scale": 0.766667,
+        "rotationY": 0.0,
+        "gripAt": -0.21,
+        "headOffsetY": 0.365734
+      },
+      "fallback": {
+        "procedural": "alstroemeria",
+        "color": "#f2c4cf"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.13276
+      },
+      "recolor": {
+        "mode": "petals",
+        "hue": [
+          320,
+          80
+        ]
+      }
+    },
+    {
+      "id": "spray-chrysanthemum-1",
+      "kind": "filler",
+      "displayName": "多头小菊 · 鹅黄",
+      "glb": "lux-spray-chrysanthemum.glb",
+      "thumb": "thumbs/spray-chrysanthemum-1.png",
+      "transform": {
+        "scale": 0.707692,
+        "rotationY": 0.0,
+        "gripAt": -0.21,
+        "headOffsetY": 0.379821
+      },
+      "fallback": {
+        "procedural": "spray-chrysanthemum",
+        "color": "#efd27a"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.09471
+      }
+    },
+    {
+      "id": "spray-chrysanthemum-2",
+      "kind": "filler",
+      "displayName": "多头小菊 · 白",
+      "glb": "lux-spray-chrysanthemum.glb",
+      "thumb": "thumbs/spray-chrysanthemum-2.png",
+      "transform": {
+        "scale": 0.707692,
+        "rotationY": 0.0,
+        "gripAt": -0.21,
+        "headOffsetY": 0.379821
+      },
+      "fallback": {
+        "procedural": "spray-chrysanthemum",
+        "color": "#f5f1e6"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.09471
+      },
+      "recolor": {
+        "mode": "petals",
+        "hue": [
+          345,
+          69
+        ]
+      }
+    },
+    {
+      "id": "babys-breath-1",
+      "kind": "filler",
+      "displayName": "满天星 · 白",
+      "glb": "lux-babys-breath.glb",
+      "thumb": "thumbs/babys-breath-1.png",
+      "transform": {
+        "scale": 0.551757,
+        "rotationY": 0.0,
+        "gripAt": -0.21,
+        "headOffsetY": 0.368221
+      },
+      "fallback": {
+        "procedural": "babys-breath",
+        "color": "#f7f4ec"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.13393
+      },
+      "recolor": {
+        "mode": "petals",
+        "hue": [
+          256,
+          76
+        ]
+      }
+    },
+    {
+      "id": "babys-breath-2",
+      "kind": "filler",
+      "displayName": "满天星 · 淡粉",
+      "glb": "lux-babys-breath.glb",
+      "thumb": "thumbs/babys-breath-2.png",
+      "transform": {
+        "scale": 0.551757,
+        "rotationY": 0.0,
+        "gripAt": -0.21,
+        "headOffsetY": 0.368221
+      },
+      "fallback": {
+        "procedural": "babys-breath",
+        "color": "#f3d6dd"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.13393
+      }
+    },
+    {
+      "id": "statice-1",
+      "kind": "filler",
+      "displayName": "补血草 · 薰衣草紫",
+      "glb": "lux-statice.glb",
+      "thumb": "thumbs/statice-1.png",
+      "transform": {
+        "scale": 0.766667,
+        "rotationY": 0.0,
+        "gripAt": -0.21,
+        "headOffsetY": 0.35942
+      },
+      "fallback": {
+        "procedural": "statice",
+        "color": "#b9a3cf"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.19262
+      }
+    },
+    {
+      "id": "statice-2",
+      "kind": "filler",
+      "displayName": "补血草 · 象牙",
+      "glb": "lux-statice.glb",
+      "thumb": "thumbs/statice-2.png",
+      "transform": {
+        "scale": 0.766667,
+        "rotationY": 0.0,
+        "gripAt": -0.21,
+        "headOffsetY": 0.35942
+      },
+      "fallback": {
+        "procedural": "statice",
+        "color": "#ece3d3"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.19262
+      },
+      "recolor": {
+        "mode": "petals",
+        "hue": [
+          210,
+          330
+        ]
+      }
+    },
+    {
+      "id": "waxflower-1",
+      "kind": "filler",
+      "displayName": "澳洲蜡花 · 淡粉",
+      "glb": "lux-waxflower.glb",
+      "thumb": "thumbs/waxflower-1.png",
+      "transform": {
+        "scale": 1.022222,
+        "rotationY": 0.0,
+        "gripAt": -0.21,
+        "headOffsetY": 0.375523
+      },
+      "fallback": {
+        "procedural": "waxflower",
+        "color": "#efc9d3"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.12228
+      }
+    },
+    {
+      "id": "waxflower-2",
+      "kind": "filler",
+      "displayName": "澳洲蜡花 · 玫红",
+      "glb": "lux-waxflower.glb",
+      "thumb": "thumbs/waxflower-2.png",
+      "transform": {
+        "scale": 1.022222,
+        "rotationY": 0.0,
+        "gripAt": -0.21,
+        "headOffsetY": 0.375523
+      },
+      "fallback": {
+        "procedural": "waxflower",
+        "color": "#d97f96"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.12228
+      },
+      "recolor": {
+        "mode": "petals",
+        "hue": [
+          284,
+          44
+        ]
+      }
+    },
+    {
+      "id": "rice-flower-1",
+      "kind": "filler",
+      "displayName": "小米花 · 米白",
+      "glb": "lux-rice-flower.glb",
+      "thumb": "thumbs/rice-flower-1.png",
+      "transform": {
+        "scale": 0.707692,
+        "rotationY": 0.0,
+        "gripAt": -0.21,
+        "headOffsetY": 0.367879
+      },
+      "fallback": {
+        "procedural": "rice-flower",
+        "color": "#f0ead9"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.13728
+      }
+    },
+    {
+      "id": "rice-flower-2",
+      "kind": "filler",
+      "displayName": "小米花 · 浅绿",
+      "glb": "lux-rice-flower.glb",
+      "thumb": "thumbs/rice-flower-2.png",
+      "transform": {
+        "scale": 0.707692,
+        "rotationY": 0.0,
+        "gripAt": -0.21,
+        "headOffsetY": 0.367879
+      },
+      "fallback": {
+        "procedural": "rice-flower",
+        "color": "#dfe6d2"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.13728
+      },
+      "recolor": {
+        "mode": "foliage",
+        "hue": [
+          55,
+          200
+        ]
+      }
+    },
+    {
+      "id": "veronica-1",
+      "kind": "filler",
+      "displayName": "婆婆纳 · 蓝紫",
+      "glb": "lux-veronica.glb",
+      "thumb": "thumbs/veronica-1.png",
+      "transform": {
+        "scale": 0.766667,
+        "rotationY": 0.0,
+        "gripAt": -0.21,
+        "headOffsetY": 0.358267
+      },
+      "fallback": {
+        "procedural": "veronica",
+        "color": "#8fa6d4"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.03
+      }
+    },
+    {
+      "id": "veronica-2",
+      "kind": "filler",
+      "displayName": "婆婆纳 · 白",
+      "glb": "lux-veronica.glb",
+      "thumb": "thumbs/veronica-2.png",
+      "transform": {
+        "scale": 0.766667,
+        "rotationY": 0.0,
+        "gripAt": -0.21,
+        "headOffsetY": 0.358267
+      },
+      "fallback": {
+        "procedural": "veronica",
+        "color": "#eef0f5"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.03
+      },
+      "recolor": {
+        "mode": "petals",
+        "hue": [
+          160,
+          280
+        ]
+      }
+    },
+    {
+      "id": "snapdragon-1",
+      "kind": "filler",
+      "displayName": "金鱼草 · 桃红",
+      "glb": "lux-snapdragon.glb",
+      "thumb": "thumbs/snapdragon-1.png",
+      "transform": {
+        "scale": 0.766667,
+        "rotationY": 0.0,
+        "gripAt": -0.21,
+        "headOffsetY": 0.3697
+      },
+      "fallback": {
+        "procedural": "snapdragon",
+        "color": "#e88e9e"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.04217
+      }
+    },
+    {
+      "id": "snapdragon-2",
+      "kind": "filler",
+      "displayName": "金鱼草 · 鹅黄",
+      "glb": "lux-snapdragon.glb",
+      "thumb": "thumbs/snapdragon-2.png",
+      "transform": {
+        "scale": 0.766667,
+        "rotationY": 0.0,
+        "gripAt": -0.21,
+        "headOffsetY": 0.3697
+      },
+      "fallback": {
+        "procedural": "snapdragon",
+        "color": "#ecc95f"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.04217
+      },
+      "recolor": {
+        "mode": "petals",
+        "hue": [
+          289,
+          49
+        ]
+      }
+    },
+    {
+      "id": "ruscus-1",
+      "kind": "greenery",
+      "displayName": "鲁斯卡斯 · 深绿",
+      "glb": "lux-ruscus.glb",
+      "thumb": "thumbs/ruscus-1.png",
+      "transform": {
+        "scale": 0.933333,
+        "rotationY": 0.0,
+        "gripAt": -0.26,
+        "headOffsetY": 0.463264
+      },
+      "fallback": {
+        "procedural": "ruscus",
+        "color": "#4b6b45"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.07848
+      }
+    },
+    {
+      "id": "salal-1",
+      "kind": "greenery",
+      "displayName": "沙柳叶 · 中绿",
+      "glb": "lux-salal.glb",
+      "thumb": "thumbs/salal-1.png",
+      "transform": {
+        "scale": 0.627929,
+        "rotationY": 0.0,
+        "gripAt": -0.26,
+        "headOffsetY": 0.456305
+      },
+      "fallback": {
+        "procedural": "salal",
+        "color": "#5d7d4f"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.12516
+      }
+    },
+    {
+      "id": "asparagus-fern-1",
+      "kind": "greenery",
+      "displayName": "文竹 · 浅绿",
+      "glb": "lux-asparagus-fern.glb",
+      "thumb": "thumbs/asparagus-fern-1.png",
+      "transform": {
+        "scale": 1.244444,
+        "rotationY": 0.0,
+        "gripAt": -0.26,
+        "headOffsetY": 0.441783
+      },
+      "fallback": {
+        "procedural": "asparagus-fern",
+        "color": "#8fae7f"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.08894
+      }
+    },
+    {
+      "id": "leatherleaf-1",
+      "kind": "greenery",
+      "displayName": "皮革蕨 · 灰绿",
+      "glb": "lux-leatherleaf.glb",
+      "thumb": "thumbs/leatherleaf-1.png",
+      "transform": {
+        "scale": 0.781188,
+        "rotationY": 0.0,
+        "gripAt": -0.26,
+        "headOffsetY": 0.451003
+      },
+      "fallback": {
+        "procedural": "leatherleaf",
+        "color": "#6f8a63"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.09017
+      }
+    },
+    {
+      "id": "boston-fern-1",
+      "kind": "greenery",
+      "displayName": "肾蕨 · 亮绿",
+      "glb": "lux-boston-fern.glb",
+      "thumb": "thumbs/boston-fern-1.png",
+      "transform": {
+        "scale": 1.27406,
+        "rotationY": 0.0,
+        "gripAt": -0.26,
+        "headOffsetY": 0.46912
+      },
+      "fallback": {
+        "procedural": "boston-fern",
+        "color": "#5b7f4a"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.2
+      }
+    },
+    {
+      "id": "ivy-1",
+      "kind": "greenery",
+      "displayName": "常春藤 · 深绿",
+      "glb": "lux-ivy.glb",
+      "thumb": "thumbs/ivy-1.png",
+      "transform": {
+        "scale": 0.685374,
+        "rotationY": 0.0,
+        "gripAt": -0.26,
+        "headOffsetY": 0.474921
+      },
+      "fallback": {
+        "procedural": "ivy",
+        "color": "#46653f"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.2
+      }
+    },
+    {
+      "id": "fatsia-1",
+      "kind": "greenery",
+      "displayName": "八角金盘 · 墨绿",
+      "glb": "lux-fatsia.glb",
+      "thumb": "thumbs/fatsia-1.png",
+      "transform": {
+        "scale": 1.911508,
+        "rotationY": 0.0,
+        "gripAt": -0.26,
+        "headOffsetY": 0.4476
+      },
+      "fallback": {
+        "procedural": "fatsia",
+        "color": "#3f5c3a"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.19232
+      }
+    },
+    {
+      "id": "aspidistra-1",
+      "kind": "greenery",
+      "displayName": "蜘蛛抱蛋叶 · 深绿",
+      "glb": "lux-aspidistra.glb",
+      "thumb": "thumbs/aspidistra-1.png",
+      "transform": {
+        "scale": 1.120448,
+        "rotationY": 0.0,
+        "gripAt": -0.26,
+        "headOffsetY": 0.468048
+      },
+      "fallback": {
+        "procedural": "aspidistra",
+        "color": "#3d5a38"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.19807
+      }
+    },
+    {
+      "id": "bear-grass-1",
+      "kind": "greenery",
+      "displayName": "熊草 · 银绿",
+      "glb": "lux-bear-grass.glb",
+      "thumb": "thumbs/bear-grass-1.png",
+      "transform": {
+        "scale": 0.7,
+        "rotationY": 0.0,
+        "gripAt": -0.26,
+        "headOffsetY": 0.436412
+      },
+      "fallback": {
+        "procedural": "bear-grass",
+        "color": "#93a98a"
+      },
+      "size": {
+        "uniformScale": 1,
+        "headWidth": 1,
+        "headHeight": 1,
+        "leafSpread": 1,
+        "headRadius": 0.17185
+      }
+    }
+  ]
+}

@@ -1,0 +1,283 @@
+{
+  "assetsVersion": "2026-11-07.vessels-134109",
+  "generatedAt": "2026-11-07T13:41:09+0800",
+  "pipeline": {
+    "name": "vessel_glb_pipeline.py",
+    "version": "1.1",
+    "textureCompression": "baseColor 1024 q82 / normal 1024 q90 / metallicRoughness 512 q75；有 alpha 则保留 PNG"
+  },
+  "plan": "assets/local/vessel-plan.json",
+  "source": "Aholo Lux3D text-to-3D（G1 / photorealistic / faceCount 30000）",
+  "count": 5,
+  "ok": 5,
+  "creditsTotal": 100,
+  "bytesTotal": 6434152,
+  "targetMaxBytes": 2621440,
+  "assets": [
+    {
+      "id": "wicker-basket",
+      "name": "藤编花篮",
+      "kind": "vessel",
+      "file": "wicker-basket.glb",
+      "url": "assets/vessels/wicker-basket.glb",
+      "targetHeightM": 0.2,
+      "triangles": 41304,
+      "vertices": 61929,
+      "bytes": 2436508,
+      "rawBytes": 9085584,
+      "bbox": {
+        "min": [
+          -0.225,
+          -0.178712,
+          -0.224951
+        ],
+        "max": [
+          0.225,
+          0.178712,
+          0.224951
+        ],
+        "size": [
+          0.45,
+          0.357425,
+          0.449902
+        ]
+      },
+      "taskId": 4815066,
+      "runId": "20261107v-wicker-basket",
+      "credits": 20,
+      "creditsSource": "runs/<run>/generation.json",
+      "requestedAt": "2026-11-07T13:32:19+0800",
+      "finishedAt": "2026-11-07T13:37:47+0800",
+      "taskElapsedSeconds": null,
+      "promptSha256": "db9da2d18612129a02f69ac71175a7243ce184c46ef00272176f1b3a0ea39b17",
+      "sha256": "61a4759a181928d916903e1eabc514501263fb0094e8f3cc071a76c68bd59f0c",
+      "indexCompaction": {
+        "savedBytes": 247824,
+        "actions": [
+          {
+            "action": "uint16",
+            "componentType": 5123
+          }
+        ]
+      },
+      "validation": {
+        "glbValid": true,
+        "triangleCountMatch": true,
+        "indexIdentical": true
+      },
+      "withinTarget": true
+    },
+    {
+      "id": "gift-box",
+      "name": "方形开口花礼盒",
+      "kind": "vessel",
+      "file": "gift-box.glb",
+      "url": "assets/vessels/gift-box.glb",
+      "targetHeightM": 0.2,
+      "triangles": 32342,
+      "vertices": 25324,
+      "bytes": 1096184,
+      "rawBytes": 5377484,
+      "bbox": {
+        "min": [
+          -0.125,
+          -0.087505,
+          -0.097308
+        ],
+        "max": [
+          0.125,
+          0.087505,
+          0.097308
+        ],
+        "size": [
+          0.25,
+          0.17501,
+          0.194615
+        ]
+      },
+      "taskId": 4815084,
+      "runId": "20261107v-gift-box",
+      "credits": 20,
+      "creditsSource": "runs/<run>/generation.json",
+      "requestedAt": "2026-11-07T13:32:30+0800",
+      "finishedAt": "2026-11-07T13:38:01+0800",
+      "taskElapsedSeconds": null,
+      "promptSha256": "2c230f8611c353ccbb50c4689226861fe2624b1d461ee575b53a468d245802c1",
+      "sha256": "61e5e355bd5c17a3bde4ecdc5a63c1acd6fea70dbaedb85df219ebe3ad81b590",
+      "indexCompaction": {
+        "savedBytes": 194052,
+        "actions": [
+          {
+            "action": "uint16",
+            "componentType": 5123
+          }
+        ]
+      },
+      "validation": {
+        "glbValid": true,
+        "triangleCountMatch": true,
+        "indexIdentical": true
+      },
+      "withinTarget": true
+    },
+    {
+      "id": "kraft-bucket",
+      "name": "圆筒抱抱桶",
+      "kind": "vessel",
+      "file": "kraft-bucket.glb",
+      "url": "assets/vessels/kraft-bucket.glb",
+      "targetHeightM": 0.36,
+      "triangles": 26120,
+      "vertices": 19243,
+      "bytes": 903464,
+      "rawBytes": 6343520,
+      "bbox": {
+        "min": [
+          -0.039443,
+          -0.0475,
+          -0.041958
+        ],
+        "max": [
+          0.039443,
+          0.0475,
+          0.041958
+        ],
+        "size": [
+          0.078887,
+          0.095,
+          0.083916
+        ]
+      },
+      "taskId": 4815099,
+      "runId": "20261107v-kraft-bucket",
+      "credits": 20,
+      "creditsSource": "runs/<run>/generation.json",
+      "requestedAt": "2026-11-07T13:32:40+0800",
+      "finishedAt": "2026-11-07T13:38:16+0800",
+      "taskElapsedSeconds": null,
+      "promptSha256": "9d9b17803d04384272c24a7ea64095fc08df8b832f576353a30776132e90e8e4",
+      "sha256": "04aa02b42f836942d08953d4ab7bf5209f160f7e1e7c675cdb7c3b30075bd20d",
+      "indexCompaction": {
+        "savedBytes": 156720,
+        "actions": [
+          {
+            "action": "uint16",
+            "componentType": 5123
+          }
+        ]
+      },
+      "validation": {
+        "glbValid": true,
+        "triangleCountMatch": true,
+        "indexIdentical": true
+      },
+      "withinTarget": true
+    },
+    {
+      "id": "paper-bag",
+      "name": "手提花纸袋",
+      "kind": "vessel",
+      "file": "paper-bag.glb",
+      "url": "assets/vessels/paper-bag.glb",
+      "targetHeightM": 0.3,
+      "triangles": 24418,
+      "vertices": 17808,
+      "bytes": 793664,
+      "rawBytes": 4600048,
+      "bbox": {
+        "min": [
+          -0.13609,
+          -0.2,
+          -0.082034
+        ],
+        "max": [
+          0.13609,
+          0.2,
+          0.082034
+        ],
+        "size": [
+          0.272181,
+          0.4,
+          0.164068
+        ]
+      },
+      "taskId": 4815119,
+      "runId": "20261107v-paper-bag",
+      "credits": 20,
+      "creditsSource": "runs/<run>/generation.json",
+      "requestedAt": "2026-11-07T13:32:51+0800",
+      "finishedAt": "2026-11-07T13:36:59+0800",
+      "taskElapsedSeconds": null,
+      "promptSha256": "31370f6e15a9c7506c35cdd5afc9038d353f719855656e7db621489ce13d822b",
+      "sha256": "8b6bb61fb550ac6dd2b49bd60b0a63d7abe34e6b1bc93cb55e7f457834626b0c",
+      "indexCompaction": {
+        "savedBytes": 146508,
+        "actions": [
+          {
+            "action": "uint16",
+            "componentType": 5123
+          }
+        ]
+      },
+      "validation": {
+        "glbValid": true,
+        "triangleCountMatch": true,
+        "indexIdentical": true
+      },
+      "withinTarget": true
+    },
+    {
+      "id": "wood-crate",
+      "name": "浅口木条花箱",
+      "kind": "vessel",
+      "file": "wood-crate.glb",
+      "url": "assets/vessels/wood-crate.glb",
+      "targetHeightM": 0.22,
+      "triangles": 29578,
+      "vertices": 26934,
+      "bytes": 1204332,
+      "rawBytes": 7051508,
+      "bbox": {
+        "min": [
+          -0.2,
+          -0.088102,
+          -0.13284
+        ],
+        "max": [
+          0.2,
+          0.088102,
+          0.13284
+        ],
+        "size": [
+          0.4,
+          0.176204,
+          0.265681
+        ]
+      },
+      "taskId": 4815140,
+      "runId": "20261107v-wood-crate",
+      "credits": 20,
+      "creditsSource": "runs/<run>/generation.json",
+      "requestedAt": "2026-11-07T13:33:01+0800",
+      "finishedAt": "2026-11-07T13:38:03+0800",
+      "taskElapsedSeconds": null,
+      "promptSha256": "10adba60ef29cd3d53a813767265468cb5cbef3ab03538de326a04659f39094e",
+      "sha256": "0120bcaee4eafb8e3e884c14c035ad68eb8a413b32ea35e8d077c7662bc1d4d1",
+      "indexCompaction": {
+        "savedBytes": 177468,
+        "actions": [
+          {
+            "action": "uint16",
+            "componentType": 5123
+          }
+        ]
+      },
+      "validation": {
+        "glbValid": true,
+        "triangleCountMatch": true,
+        "indexIdentical": true
+      },
+      "withinTarget": true
+    }
+  ]
+}

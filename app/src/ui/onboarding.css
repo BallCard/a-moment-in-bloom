@@ -1,0 +1,221 @@
+/* =========================================================================
+   新手引导浮层（V16 §2）：底部一句话 + 少量候选。
+   - 只在摆花阶段出现；可跳过；不拦截底层画面，只占自己那块卡片；
+   - 引导激活时（<html class="onboarding-active">）临时收起 EmptyGuide 的
+     「第一次放花」既有提示，避免两条提示同时说同一件事。
+   ========================================================================= */
+
+.onboarding-coach {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: min(430px, calc(100vw - 36px));
+  padding: 11px 13px 12px;
+  border: 1px solid color-mix(in srgb, var(--line-strong) 72%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--paper-2) 90%, transparent);
+  box-shadow: var(--shadow-lift);
+  color: var(--ink);
+  transform: translateX(-50%);
+  backdrop-filter: blur(16px) saturate(1.08);
+  -webkit-backdrop-filter: blur(16px) saturate(1.08);
+  /* 引导只是提示：卡片本身不吃指针，用户仍能直接点画布上的花茎/切线。 */
+  pointer-events: none;
+  animation: coach-in 220ms var(--ease) both;
+}
+
+/* 只有真正可点的候选、跳过、完成按钮接收指针。 */
+.onboarding-coach button,
+.onboarding-coach a {
+  pointer-events: auto;
+}
+
+@keyframes coach-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.onboarding-coach[data-motion='reduced'] {
+  animation: coach-fade 140ms linear both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .onboarding-coach {
+    animation: coach-fade 140ms linear both;
+  }
+}
+
+@keyframes coach-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---------- 头：进度 + 跳过 ---------- */
+
+.coach-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.coach-progress {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--leaf-deep);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.coach-skip {
+  flex: none;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #93806b;
+  font-size: 10px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.coach-skip:hover {
+  color: var(--danger);
+}
+
+/* ---------- 文案 ---------- */
+
+.coach-line {
+  margin: 0;
+  color: var(--ink);
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+.coach-purpose {
+  margin: 0;
+  color: var(--muted);
+  font-size: 10.5px;
+  line-height: 1.55;
+}
+
+/* ---------- 候选 ---------- */
+
+.coach-candidates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 1px;
+}
+
+.coach-candidate {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 26px;
+  padding: 0 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 253, 247, 0.9);
+  color: var(--ink-soft);
+  font-size: 11px;
+  cursor: pointer;
+  transition:
+    border-color var(--t-control) var(--ease),
+    background var(--t-control) var(--ease),
+    color var(--t-control) var(--ease);
+}
+
+.coach-candidate:hover {
+  border-color: var(--clay);
+  background: var(--paper-3);
+  color: var(--ink);
+}
+
+.coach-candidate.is-picked {
+  border-color: var(--leaf-deep);
+  background: var(--leaf-soft);
+  color: var(--leaf-deep);
+}
+
+.coach-candidate:focus-visible {
+  outline: 2px solid var(--leaf-line);
+  outline-offset: 1px;
+}
+
+.coach-candidate-dot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(60, 45, 30, 0.18);
+}
+
+.coach-picked {
+  margin: 0;
+  color: var(--leaf-deep);
+  font-size: 10.5px;
+  line-height: 1.5;
+}
+
+/* ---------- 最后一步的结束按钮 ---------- */
+
+.coach-finish {
+  align-self: flex-start;
+  min-height: 26px;
+  margin-top: 2px;
+  padding: 0 12px;
+  border: 1px solid var(--leaf-deep);
+  border-radius: 999px;
+  background: var(--leaf-deep);
+  color: #f7f1e6;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.coach-finish:hover {
+  background: var(--leaf);
+}
+
+/* ---------- 与既有第一次放花提示不重复 ---------- */
+
+html.onboarding-active .empty-guide.first-flower-hint {
+  display: none !important;
+}
+
+/* ---------- 窄屏 ---------- */
+
+@media (max-width: 460px) {
+  .onboarding-coach {
+    bottom: 12px;
+    width: calc(100vw - 20px);
+    padding: 10px 11px 11px;
+  }
+
+  .coach-line {
+    font-size: 12px;
+  }
+
+  .coach-purpose {
+    font-size: 10px;
+  }
+}

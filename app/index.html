@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5ecdf" />
+    <meta
+      name="description"
+      content="花间一刻是一款 3D 花艺创作小游戏。在温暖的花艺工作室里，选花、搭配、包装、拍照，为自己创作，或回应一封顾客的心愿。把心意，慢慢做成一束花。"
+    />
+    <link rel="icon" type="image/png" sizes="32x32" href="%BASE_URL%brand/icon-32.png" />
+    <link rel="icon" type="image/png" sizes="64x64" href="%BASE_URL%brand/icon-64.png" />
+    <link rel="apple-touch-icon" href="%BASE_URL%brand/icon-192.png" />
+    <meta property="og:title" content="花间一刻 · 3D 花艺创作小游戏" />
+    <meta property="og:description" content="把心意，慢慢做成一束花。选花、搭配、包装、拍照，为自己创作，或回应一封顾客的心愿。" />
+    <meta property="og:type" content="website" />
+    <title>花间一刻 · 3D 花艺创作小游戏</title>
+
+    <style>
+      html,body{margin:0;background:#f5ecdf}
+      .bloom-boot{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:#f5ecdf;color:#55473d;text-align:center;transition:opacity .35s ease;overflow:auto;padding:24px;box-sizing:border-box}
+      .bloom-boot:before{content:"";position:absolute;inset:20px;border:1px solid #bd838540;border-radius:24px;pointer-events:none}
+      .bloom-boot.leaving{opacity:0;pointer-events:none}
+      .boot-content{max-width:520px;width:100%;padding:24px 0}
+      .boot-flower{width:180px;height:180px;overflow:visible;animation:bloom-breathe 3.2s ease-in-out 1.2s infinite}
+      .boot-petal{transform-origin:120px 120px;animation:bloom-unfold 1.4s cubic-bezier(.2,.65,.3,1) both;animation-delay:calc(var(--i)*.09s)}
+      .boot-content h1{font:normal clamp(30px,5vw,44px) 'Noto Serif SC','SimSun',serif;letter-spacing:.22em;margin:24px 0 12px;padding-left:.22em}
+      .boot-english{font:11px Georgia,serif;letter-spacing:.32em;margin:0 0 40px}
+      .boot-status{font:14px 'Noto Serif SC','SimSun',serif;letter-spacing:.14em;line-height:1.8;margin:0}
+      .boot-tagline{font:12px 'Noto Serif SC','SimSun',serif;letter-spacing:.16em;margin:52px 0 0}
+      .boot-retry{margin-top:18px;padding:10px 18px;border:1px solid #bd8385;border-radius:24px;background:transparent;color:inherit;cursor:pointer}
+      @keyframes bloom-unfold{from{transform:rotate(var(--angle)) scale(.48,.68);opacity:.25}to{transform:rotate(var(--angle)) scale(1);opacity:1}}
+      @keyframes bloom-breathe{0%,100%{transform:scale(.975)}50%{transform:scale(1.025)}}
+      @media(prefers-reduced-motion:reduce){.boot-flower,.boot-petal{animation:none}.bloom-boot{transition:none}}
+      @media(max-height:520px){.boot-flower{width:100px;height:100px}.boot-tagline{margin-top:24px}.boot-english{margin-bottom:24px}}
+    </style>
+  </head>
+  <body>
+    <div id="boot-splash" class="bloom-boot" role="status" aria-live="polite"><div class="boot-content"><svg class="boot-flower" viewBox="0 0 240 240" aria-hidden="true"><defs><linearGradient id="petal-tint" x1="0" y1="0" x2=".7" y2="1"><stop stop-color="#eec7c4" stop-opacity=".65"/><stop offset="1" stop-color="#bd8385" stop-opacity=".52"/></linearGradient></defs><path d="M144 142 Q178 128 193 143 Q174 160 148 150 M145 146 Q171 148 176 168 Q155 169 143 151" fill="#879781" opacity=".65"/><path class="boot-petal" style="--i:0;--angle:0deg;transform:rotate(0deg)" d="M120 127 C91 112 76 81 89 51 C97 31 111 19 120 14 C137 22 153 44 153 64 C155 89 139 113 120 127Z" fill="url(#petal-tint)" stroke="#bd8385" stroke-opacity=".1"/><path class="boot-petal" style="--i:1;--angle:72deg;transform:rotate(72deg)" d="M120 127 C91 112 76 81 89 51 C97 31 111 19 120 14 C137 22 153 44 153 64 C155 89 139 113 120 127Z" fill="url(#petal-tint)" stroke="#bd8385" stroke-opacity=".1"/><path class="boot-petal" style="--i:2;--angle:144deg;transform:rotate(144deg)" d="M120 127 C91 112 76 81 89 51 C97 31 111 19 120 14 C137 22 153 44 153 64 C155 89 139 113 120 127Z" fill="url(#petal-tint)" stroke="#bd8385" stroke-opacity=".1"/><path class="boot-petal" style="--i:3;--angle:216deg;transform:rotate(216deg)" d="M120 127 C91 112 76 81 89 51 C97 31 111 19 120 14 C137 22 153 44 153 64 C155 89 139 113 120 127Z" fill="url(#petal-tint)" stroke="#bd8385" stroke-opacity=".1"/><path class="boot-petal" style="--i:4;--angle:288deg;transform:rotate(288deg)" d="M120 127 C91 112 76 81 89 51 C97 31 111 19 120 14 C137 22 153 44 153 64 C155 89 139 113 120 127Z" fill="url(#petal-tint)" stroke="#bd8385" stroke-opacity=".1"/><g stroke="#dbbd75" stroke-width="1.5"><path d="M120 124 L104 110"/><path d="M120 124 L111 100"/><path d="M120 124 L122 94"/><path d="M120 124 L133 103"/><path d="M120 124 L139 114"/></g><g fill="#edd28a"><circle cx="104" cy="110" r="3"/><circle cx="111" cy="100" r="3"/><circle cx="122" cy="94" r="3"/><circle cx="133" cy="103" r="3"/><circle cx="139" cy="114" r="3"/><circle cx="120" cy="124" r="3"/></g></svg><h1>花间一刻</h1><p class="boot-english">A MOMENT IN BLOOM</p><p class="boot-status">正在准备花台…</p><button class="boot-retry" hidden onclick="location.reload()">重新打开</button><p class="boot-tagline">把心意，慢慢做成一束花。</p></div></div>
+    <noscript><style>#boot-splash{display:none}</style><p>请开启 JavaScript 后体验花间一刻。</p></noscript>
+    <script>
+      window.setTimeout(function(){var splash=document.getElementById('boot-splash');if(!splash)return;splash.querySelector('.boot-status').textContent='花台准备得有些久，请稍候或重新打开。';splash.querySelector('.boot-retry').hidden=false;},30000);
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,91 @@
+/* V16 §3：整理面板。与现有右栏的纸质卡片风格一致，只补充分区与状态样式。 */
+.organize-panel { gap: 8px; }
+.organize-panel .panel-head { margin-bottom: 2px; }
+.organize-lead { margin: 0 0 6px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+.organize-block {
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  padding: 8px 9px;
+  background: color-mix(in srgb, var(--paper-2) 70%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/*
+ * V16.1：嵌在「这枝花」面板里时不要再套一层卡片。
+ * 用户反馈整理区「额外搞一个边框、浮在调整参数上面」——那是这里又画了一遍
+ * 卡片底色/描边/阴影，和下方「快捷微调」割裂。dense 形态只用标题层级 + 细分隔线，
+ * 跟参数区连成同一张面板。
+ */
+.organize-panel-dense {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  padding: 0;
+  gap: 6px;
+}
+.organize-panel-dense .panel-head {
+  margin: 0 0 2px;
+  padding: 0 0 7px;
+  border-bottom: 1px solid var(--line);
+}
+.organize-panel-dense .panel-head h2 {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--leaf-deep);
+}
+.organize-panel-dense .organize-lead { margin-bottom: 2px; }
+.organize-panel-dense .organize-block {
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  padding: 8px 0 0;
+}
+.organize-panel-dense .organize-block:first-of-type { border-top: 0; padding-top: 1px; }
+.organize-panel-dense .organize-primary { margin-top: 4px; }
+.organize-panel-dense .organize-foam { border-top: 1px dashed var(--line); }
+.organize-block-head { display: flex; align-items: center; gap: 7px; font-size: 13px; }
+.organize-block-head b { font-weight: 600; }
+.organize-value { margin-left: auto; color: var(--muted); font-size: 11px; }
+.organize-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 7px;
+  border-radius: 999px;
+  border: 1px solid var(--leaf-line);
+  background: color-mix(in srgb, #eef3ea 80%, transparent);
+  color: var(--leaf-deep);
+  font-size: 10px;
+  line-height: 1.6;
+}
+.organize-note { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.7; }
+.organize-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.organize-actions .btn { flex: 0 1 auto; }
+.organize-leaf-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.organize-primary { width: 100%; margin-top: 2px; }
+.organize-foam { border-style: dashed; }
+
+/* 花材架上的「可翻瓣」「占位」小标签。 */
+.organize-chip.shelf-flip-badge,
+.shelf-placeholder-badge {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 5px;
+  padding: 0 5px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 9px;
+  line-height: 1.7;
+  color: var(--muted);
+  background: color-mix(in srgb, #fffaf1 80%, transparent);
+  vertical-align: 1px;
+}
+
+/* 花材面板头部的轻量「整理」入口（不抢标题，只在需要时点）。 */
+.panel-meta-btn{border:1px solid var(--line);background:transparent;color:var(--muted);font-size:11px;line-height:1.6;padding:1px 7px;border-radius:999px;cursor:pointer}
+.panel-meta-btn:hover{color:var(--leaf-deep);border-color:var(--leaf-line)}

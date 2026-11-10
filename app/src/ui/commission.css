@@ -1,0 +1,83 @@
+/* 委托来信里的「心愿标签」。
+ *
+ * 只负责把 commissionWishes() 的派生结果排成两行标签：
+ * 花材一行、包装/器型一行。主色沿用 styles.css 的纸张与陶土色系，
+ * 不再引入新的视觉变量，保证和来信卡片的旧样式是一套。
+ */
+
+.commission-wish-tags {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 2px 0 10px;
+  padding: 9px 10px;
+  border: 1px dashed var(--line-strong);
+  border-radius: 10px;
+  background: rgba(255, 253, 247, 0.7);
+}
+
+/* 来信卡片不跟着弹窗高度压缩：心愿标签展开后内容更高，让弹窗滚动，
+ * 而不是把卡片底部的「接下这份心愿」按钮裁掉。 */
+.commission-picker .commission-letter {
+  flex-shrink: 0;
+}
+
+.wish-tag-row {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.wish-tag-caption {
+  flex: 0 0 auto;
+  min-width: 48px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+
+.wish-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border: 1px solid var(--leaf-line);
+  border-radius: 999px;
+  background: var(--leaf-soft);
+  color: var(--leaf-deep);
+  font-size: 10.5px;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.wish-tag-pack {
+  border-color: rgba(171, 130, 96, 0.32);
+  background: var(--clay-soft);
+  color: #7c5f43;
+}
+
+.commission-wish-note {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 10.5px;
+  line-height: 1.6;
+}
+
+.commission-wish-note::before {
+  content: '✿ ';
+  color: var(--rose);
+}
+
+@media (max-width: 700px) {
+  .commission-wish-tags {
+    padding: 7px 8px;
+  }
+
+  .wish-tag-caption {
+    min-width: 100%;
+  }
+
+  .wish-tag {
+    white-space: normal;
+  }
+}

@@ -1,0 +1,396 @@
+/* =========================================================================
+   V13 · 拍照完成体验（PhotoControls / SavedWorkCard）
+   只在本文件写拍照阶段样式，不改 styles.css。加载顺序在 styles.css 之后，
+   用 `.photo-tools.photo-stage-panel` 这类双类名覆盖旧的 .photo-tools 定位。
+   ========================================================================= */
+
+.photo-tools.photo-stage-panel {
+  top: 88px;
+  right: 20px;
+  bottom: 92px;
+  width: 400px;
+  padding: 14px;
+  gap: 9px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+/* ---------- 大取景预览（这一阶段的主视觉） ---------- */
+
+.photo-stage-panel .photo-stage-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.photo-stage-panel .photo-stage-head .finish-eyebrow {
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+.photo-stage-mode {
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.photo-stage {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.photo-stage-frame {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 180px;
+  min-height: 150px;
+  padding: 5px;
+  border-radius: 14px;
+  background:
+    linear-gradient(150deg, rgba(255, 252, 245, 0.9), rgba(236, 227, 212, 0.94));
+  border: 1px solid var(--line);
+  box-shadow: 0 14px 32px rgba(60, 45, 30, 0.16), inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+}
+
+.photo-stage-frame::after {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px rgba(94, 78, 60, 0.12);
+  pointer-events: none;
+}
+
+.photo-stage-panel .photo-preview {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: clamp(230px, 38vh, 348px);
+  border-radius: 10px;
+  background: #e7e0d5;
+  object-fit: contain;
+}
+
+.photo-stage-placeholder {
+  margin: 0;
+  padding: 46px 22px;
+  min-width: 190px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.photo-stage-caption {
+  margin: 0;
+  font-size: 10.5px;
+  line-height: 1.6;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ---------- 一键适配 ---------- */
+
+.photo-fit-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.photo-stage-panel .photo-fit {
+  width: 100%;
+  border-color: var(--leaf-line);
+  background: linear-gradient(180deg, rgba(247, 251, 245, 0.92), rgba(232, 240, 230, 0.86));
+  color: var(--leaf-deep);
+  font-weight: 600;
+}
+
+.photo-stage-panel .photo-fit:hover:not(:disabled) {
+  border-color: var(--leaf);
+  box-shadow: 0 4px 12px rgba(63, 93, 74, 0.16);
+}
+
+.photo-stage-panel .photo-fit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.photo-fit-note,
+.photo-stage-panel .photo-fit-hint {
+  margin: 0;
+  font-size: 10.5px;
+  line-height: 1.6;
+  color: var(--leaf-deep);
+}
+
+.photo-stage-panel .photo-fit-hint {
+  color: var(--muted);
+}
+
+/* ---------- 场景缩略图卡片 ---------- */
+
+.photo-scene-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+  margin: 2px 0 3px;
+}
+
+.photo-scene-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(255, 253, 247, 0.7);
+  color: var(--ink-soft);
+  font-size: 11px;
+  line-height: 1.3;
+  cursor: pointer;
+  transition: border-color var(--t-control) var(--ease), box-shadow var(--t-control) var(--ease),
+    background var(--t-control) var(--ease);
+}
+
+.photo-scene-card:hover {
+  border-color: var(--line-strong);
+  background: rgba(255, 253, 247, 0.95);
+}
+
+.photo-scene-card.is-on {
+  border-color: var(--leaf);
+  background: var(--leaf-soft);
+  box-shadow: 0 0 0 2px rgba(63, 93, 74, 0.16);
+  color: var(--leaf-deep);
+  font-weight: 600;
+}
+
+.photo-scene-thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 7px;
+  overflow: hidden;
+  background: #e7e0d5;
+  box-shadow: inset 0 0 0 1px rgba(94, 78, 60, 0.1);
+}
+
+.photo-scene-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-scene-fallback {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(150deg, #cfc4b2, #a9a292);
+}
+
+.photo-scene-fallback[data-scene='window'] {
+  background: linear-gradient(160deg, #dfe7dc, #aab7a4 62%, #8a7357);
+}
+.photo-scene-fallback[data-scene='studio'] {
+  background: linear-gradient(160deg, #eee5d7, #d6c9b5 65%, #bca98f);
+}
+.photo-scene-fallback[data-scene='gallery'] {
+  background: linear-gradient(160deg, #3d5449, #2b4038 68%, #716354);
+}
+.photo-scene-fallback[data-scene='florist'] {
+  background: linear-gradient(160deg, #f0e4d2, #dcc9ad 62%, #a98d6d);
+}
+.photo-scene-fallback[data-scene='garden'] {
+  background: linear-gradient(160deg, #e8f0e7, #c3d4c4 60%, #9db39a);
+}
+.photo-scene-fallback[data-scene='festive'] {
+  background: linear-gradient(160deg, #4c3329, #3b2a26 58%, #8a5f45);
+}
+.photo-scene-fallback[data-scene='living'] {
+  background: linear-gradient(160deg, #f1e8db, #ddcfba 60%, #b79f82);
+}
+.photo-scene-fallback[data-scene='cafe'] {
+  background: linear-gradient(160deg, #f0e8db, #d9c9b2 60%, #b08f68);
+}
+
+.photo-scene-label {
+  text-align: center;
+  font-size: 10.5px;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- 保存成功卡 ---------- */
+
+.photo-save-success {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 10px;
+  border: 1px solid var(--leaf-line);
+  border-radius: 12px;
+  background: linear-gradient(165deg, rgba(250, 246, 236, 0.96), rgba(233, 240, 231, 0.92));
+  box-shadow: var(--shadow-sm);
+  animation: photo-save-in 240ms var(--ease) both;
+}
+
+.photo-save-success .finish-eyebrow {
+  margin: 0;
+  color: var(--leaf);
+}
+
+.photo-save-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.photo-save-row img {
+  flex: 0 0 auto;
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: #e7e0d5;
+  box-shadow: 0 3px 10px rgba(60, 45, 30, 0.14);
+}
+
+.photo-save-meta {
+  min-width: 0;
+}
+
+.photo-save-meta strong {
+  display: block;
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.photo-save-meta p {
+  margin: 3px 0 0;
+  font-size: 10.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.photo-save-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.photo-save-actions .btn {
+  flex: 1 1 96px;
+}
+
+@keyframes photo-save-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-save-success {
+    animation: none;
+  }
+}
+
+/* ---------- 窄一些的窗口 ---------- */
+
+@media (max-width: 1500px) {
+  .photo-tools.photo-stage-panel {
+    width: 384px;
+  }
+}
+
+@media (max-width: 1400px) {
+  .photo-tools.photo-stage-panel {
+    top: 84px;
+    right: 14px;
+    bottom: 86px;
+    width: 366px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .photo-tools.photo-stage-panel {
+    width: 330px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 900px) {
+  .photo-tools.photo-stage-panel {
+    top: 78px;
+    right: 8px;
+    bottom: 80px;
+    width: min(340px, calc(100vw - 20px));
+  }
+
+  .photo-stage-panel .photo-preview {
+    max-height: clamp(200px, 34vh, 300px);
+  }
+}
+
+/* 391px 窄屏：面板贴右但不出屏，缩略图仍保持 4 列可点。 */
+@media (max-width: 480px) {
+  .photo-tools.photo-stage-panel {
+    top: 72px;
+    right: 6px;
+    bottom: 74px;
+    width: min(324px, calc(100vw - 12px));
+    padding: 10px;
+    gap: 7px;
+  }
+
+  .photo-stage-panel .photo-preview {
+    max-height: clamp(180px, 32vh, 260px);
+  }
+
+  .photo-stage-frame {
+    padding: 4px;
+    min-width: 150px;
+  }
+
+  .photo-scene-grid {
+    gap: 5px;
+  }
+
+  .photo-scene-card {
+    padding: 3px;
+    font-size: 10px;
+  }
+
+  .photo-scene-label {
+    font-size: 10px;
+  }
+
+  .photo-save-row img {
+    width: 54px;
+    height: 54px;
+  }
+}

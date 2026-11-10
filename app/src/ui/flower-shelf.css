@@ -1,0 +1,743 @@
+/* =========================================================================
+   花材架提效（V13）：两列紧凑卡片、搜索/色系/最近使用、委托心愿标记。
+   只作用于花材架与「花材与花枝」面板；公共视觉变量与基础组件仍取自 styles.css。
+   ========================================================================= */
+
+/* ---------- 面板结构：标签切换 + 单一滚动区 ---------- */
+
+.flower-panel .flower-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  gap: 0;
+  overflow: hidden;
+}
+
+.flower-tabs {
+  display: flex;
+  gap: 4px;
+  margin: 1px 0 8px;
+  padding: 3px;
+  border-radius: 10px;
+  background: rgba(94, 78, 60, 0.08);
+}
+
+.flower-tab {
+  flex: 1 1 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-width: 0;
+  min-height: 29px;
+  padding: 0 6px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition:
+    background var(--t-control) var(--ease),
+    color var(--t-control) var(--ease),
+    border-color var(--t-control) var(--ease);
+}
+
+.flower-tab:hover {
+  color: var(--leaf-deep);
+  background: rgba(255, 253, 247, 0.6);
+}
+
+.flower-tab.is-on {
+  border-color: var(--line);
+  background: rgba(255, 253, 247, 0.94);
+  color: var(--leaf-deep);
+  box-shadow: var(--shadow-sm);
+}
+
+.flower-tab-count {
+  min-width: 17px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: rgba(63, 93, 74, 0.13);
+  color: var(--leaf-deep);
+  font-size: 9.5px;
+  font-weight: 500;
+  line-height: 15px;
+  font-variant-numeric: tabular-nums;
+}
+
+.flower-palette {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* styles.css 里 `.flower-palette .palette-panel { flex: none }` 是旧的合并面板规则，
+   这里用同等选择器 + 更高优先级收回成「填满并允许收缩」，否则面板会被撑到内容宽度。 */
+.flower-palette .palette-inner.shelf-panel {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.shelf-panel .shelf-root {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* ---------- 搜索 + 数量 ---------- */
+
+.shelf-search-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+}
+
+.shelf-search {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  height: 30px;
+  padding: 0 5px 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: rgba(255, 253, 247, 0.78);
+  color: var(--muted);
+  transition:
+    border-color var(--t-control) var(--ease),
+    box-shadow var(--t-control) var(--ease);
+}
+
+.shelf-search:focus-within {
+  border-color: var(--leaf-line);
+  box-shadow: 0 0 0 1px rgba(63, 93, 74, 0.12);
+}
+
+.shelf-search-icon {
+  flex: none;
+  font-size: 12px;
+  line-height: 1;
+  opacity: 0.65;
+}
+
+.shelf-search input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 11.5px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.shelf-search input:focus,
+.shelf-search input:focus-visible {
+  outline: none;
+}
+
+.shelf-search input::placeholder {
+  color: #a08f7b;
+}
+
+.shelf-search input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.shelf-search-clear {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(94, 78, 60, 0.1);
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 17px;
+  cursor: pointer;
+}
+
+.shelf-search-clear:hover {
+  background: rgba(94, 78, 60, 0.2);
+  color: var(--ink-soft);
+}
+
+.shelf-count {
+  flex: none;
+  color: var(--muted);
+  font-size: 9.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 分类 / 色系筛选 ---------- */
+
+.shelf-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  flex: none;
+}
+
+.shelf-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 23px;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 253, 247, 0.55);
+  color: var(--muted);
+  font-size: 10.5px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background var(--t-control) var(--ease),
+    border-color var(--t-control) var(--ease),
+    color var(--t-control) var(--ease);
+}
+
+.shelf-chip:hover {
+  border-color: var(--clay);
+  color: var(--ink-soft);
+}
+
+.shelf-chip.is-on {
+  border-color: var(--leaf-deep);
+  background: var(--leaf-deep);
+  color: #f7f1e6;
+}
+
+.shelf-chip.is-on:hover {
+  border-color: var(--leaf-deep);
+  color: #fffaf1;
+}
+
+.shelf-chip-dot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(60, 45, 30, 0.2);
+}
+
+.shelf-tone-row {
+  gap: 3px;
+}
+
+.shelf-tone-row .shelf-chip {
+  min-height: 22px;
+  padding: 0 6px;
+  font-size: 10px;
+}
+
+/* ---------- 最近使用 ---------- */
+
+.shelf-recent {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex: none;
+  min-width: 0;
+  padding: 4px 6px;
+  border: 1px dashed var(--line);
+  border-radius: 9px;
+  background: rgba(255, 253, 247, 0.45);
+}
+
+.shelf-recent-label {
+  flex: none;
+  color: #93806b;
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+}
+
+.shelf-recent-track {
+  display: flex;
+  flex: 1 1 auto;
+  gap: 4px;
+  min-width: 0;
+  overflow-x: auto;
+  padding-bottom: 1px;
+  scrollbar-width: none;
+}
+
+.shelf-recent-track::-webkit-scrollbar {
+  display: none;
+}
+
+.shelf-recent-chip {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 4px;
+  max-width: 96px;
+  min-height: 20px;
+  padding: 0 7px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 253, 247, 0.9);
+  color: var(--ink-soft);
+  font-size: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.shelf-recent-chip:hover {
+  border-color: var(--clay);
+  background: var(--paper-3);
+}
+
+.shelf-recent-clear {
+  flex: none;
+  padding: 0 1px;
+  border: none;
+  background: none;
+  color: #93806b;
+  font-size: 9.5px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.shelf-recent-clear:hover {
+  color: var(--danger);
+}
+
+/* ---------- 委托心愿 ---------- */
+
+.shelf-wish-line {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  flex: none;
+  min-width: 0;
+  padding: 5px 8px;
+  border: 1px solid rgba(191, 127, 140, 0.3);
+  border-radius: 9px;
+  background: var(--rose-soft);
+  color: #8c5a63;
+  font-size: 10.5px;
+  line-height: 1.45;
+}
+
+.shelf-wish-label {
+  flex: none;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.shelf-wish-line strong {
+  min-width: 0;
+  overflow: hidden;
+  color: #7d4a54;
+  font-weight: 500;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* ---------- 两列卡片网格 ---------- */
+
+.shelf-scroll {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.shelf-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.shelf-card {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: rgba(255, 253, 247, 0.55);
+  transition:
+    background var(--t-control) var(--ease),
+    border-color var(--t-control) var(--ease),
+    box-shadow var(--t-control) var(--ease);
+}
+
+.shelf-card:hover {
+  border-color: var(--clay);
+  background: rgba(255, 253, 247, 0.95);
+  box-shadow: var(--shadow-sm);
+}
+
+.shelf-card.is-active {
+  border-color: var(--leaf-line);
+  background: var(--leaf-soft);
+  box-shadow: 0 0 0 1px rgba(63, 93, 74, 0.16);
+}
+
+.shelf-card.is-wish {
+  border-color: rgba(191, 127, 140, 0.55);
+}
+
+.shelf-card.is-active.is-wish {
+  border-color: var(--leaf-line);
+}
+
+.shelf-card-main {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+.shelf-card-main:active {
+  cursor: grabbing;
+}
+
+.shelf-thumb {
+  position: relative;
+  display: block;
+  height: 62px;
+  overflow: hidden;
+  border-radius: 10px 10px 0 0;
+  background: linear-gradient(165deg, #fffaf1, #f0e2cf);
+}
+
+/* 静态缩略图是 160×190 的整枝图；放大并只取上段，让花头占满卡片。 */
+.shelf-thumb .model-thumbnail {
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  width: 126%;
+  max-width: none;
+  height: auto;
+  object-fit: initial;
+  transform: translateX(-50%);
+  pointer-events: none;
+  user-select: none;
+}
+
+.shelf-card[data-kind='filler'] .shelf-thumb .model-thumbnail {
+  width: 120%;
+}
+
+.shelf-card[data-kind='greenery'] .shelf-thumb .model-thumbnail {
+  top: 0;
+  width: 110%;
+}
+
+.shelf-thumb .model-thumbnail-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 0 6px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.shelf-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  padding: 4px 6px 5px;
+}
+
+.shelf-name {
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.shelf-sub {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 9.5px;
+  line-height: 1.35;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.shelf-tone-dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(60, 45, 30, 0.18);
+}
+
+.shelf-wish-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  padding: 1px 5px;
+  border: 1px solid rgba(191, 127, 140, 0.62);
+  border-radius: 999px;
+  background: rgba(255, 253, 247, 0.95);
+  color: #8c5a63;
+  font-size: 8.5px;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  box-shadow: 0 1px 3px rgba(90, 60, 40, 0.12);
+  pointer-events: none;
+}
+
+/* 颜色色点只在选中该花材后出现 */
+.shelf-variants {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 6px 5px;
+}
+
+.shelf-variants .variant-dot {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  border-width: 2px;
+}
+
+.shelf-variants .variant-dot.is-wish {
+  box-shadow:
+    0 0 0 1px rgba(191, 127, 140, 0.8),
+    0 0 0 3px rgba(191, 127, 140, 0.16);
+}
+
+.shelf-variant-name {
+  min-width: 0;
+  margin-left: auto;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 9px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* ---------- 空结果 / 满 20 枝 / 清空筛选 ---------- */
+
+.shelf-empty {
+  padding: 14px 10px;
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.shelf-empty button {
+  margin-left: 4px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--leaf-deep);
+  font-size: 11px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.panel-warn.shelf-full-warn {
+  flex: none;
+  margin: 0;
+  padding: 6px 8px;
+  font-size: 10.5px;
+}
+
+.shelf-reset-filters {
+  align-self: center;
+  flex: none;
+  margin: 1px 0 2px;
+  padding: 2px 4px;
+  border: none;
+  background: none;
+  color: var(--muted);
+  font-size: 10px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.stem-embedded .stem-embedded-note {
+  margin: 0 0 4px;
+}
+
+/* ---------- 矮屏 / 窄屏收敛，避免横向溢出 ---------- */
+
+@media (max-height: 800px) {
+  .shelf-thumb {
+    height: 58px;
+  }
+
+  .shelf-search {
+    height: 28px;
+  }
+
+  .flower-tab {
+    min-height: 27px;
+  }
+}
+
+@media (max-width: 420px) {
+  .shelf-grid {
+    gap: 5px;
+  }
+
+  .shelf-chip {
+    padding: 0 6px;
+  }
+
+  .shelf-tone-row .shelf-chip {
+    padding: 0 5px;
+  }
+
+  .shelf-name {
+    font-size: 11.5px;
+  }
+
+  .shelf-card-text {
+    padding: 4px 5px 5px;
+  }
+}
+
+/* ---------- V16 §2/§4：类目入口、占位标注、了解入口、引导高亮 ---------- */
+
+/* 类目：三组常驻 + 点开后的小类一行；不新增多排常驻筛选。 */
+.shelf-cat-row { align-items: center; }
+.shelf-group-chip { border-style: dashed; }
+.shelf-group-chip.is-on { border-style: solid; }
+.shelf-subcat-row { align-items: center; gap: 4px; padding: 2px 0 1px; }
+.shelf-subcat-note { flex: 1 1 100%; color: var(--muted); font-size: 10px; line-height: 1.6; }
+.shelf-cat-note {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 10.5px;
+  line-height: 1.6;
+}
+.shelf-cat-clear {
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--leaf-deep);
+  font-size: 10.5px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* 占位模型标注：只说明这是程序化占位，不当成真实模型。 */
+.shelf-placeholder-badge {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 0 4px;
+  border: 1px dashed var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 8.5px;
+  font-weight: 400;
+  line-height: 1.6;
+  vertical-align: 1px;
+}
+
+/* 「了解」入口：默认收成右下角的小徽标，悬停/聚焦时显现；触屏与窄屏常驻。 */
+.shelf-know {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  z-index: 2;
+  padding: 0 6px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 250, 241, 0.92);
+  color: var(--muted);
+  font-size: 9.5px;
+  line-height: 1.75;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.16s ease;
+}
+.shelf-card:hover .shelf-know,
+.shelf-card:focus-within .shelf-know { opacity: 1; }
+.shelf-know:hover { color: var(--leaf-deep); border-color: var(--leaf-line); }
+.shelf-know:focus-visible { opacity: 1; outline: 2px solid var(--leaf-line); outline-offset: 1px; }
+@media (hover: none), (max-width: 760px) {
+  .shelf-know { opacity: 1; }
+}
+
+/* 新手指引高亮：被引导点到的那几种花材轻轻亮一下，不挡点击。 */
+.shelf-card.is-coach {
+  border-color: var(--leaf-line);
+  box-shadow: 0 0 0 2px rgba(63, 93, 74, 0.14);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .shelf-card.is-coach { animation: shelf-coach-breathe 2.4s ease-in-out infinite; }
+}
+@keyframes shelf-coach-breathe {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(63, 93, 74, 0.12); }
+  50% { box-shadow: 0 0 0 3px rgba(63, 93, 74, 0.26); }
+}
+
+/* 「可翻瓣」小标签：只有能在整理里真正翻瓣的花材才显示。 */
+.shelf-flip-badge {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 0 4px;
+  border: 1px solid var(--leaf-line);
+  border-radius: 999px;
+  color: var(--leaf-deep);
+  font-size: 8.5px;
+  font-weight: 400;
+  line-height: 1.6;
+  vertical-align: 1px;
+  background: color-mix(in srgb, #eef3ea 78%, transparent);
+}
+
+/* 卡片小标签（占位 / 可翻瓣）：绝对定位在缩略图左上，不参与花名文本。 */
+.shelf-badges{position:absolute;top:4px;left:4px;z-index:2;display:flex;flex-wrap:wrap;gap:3px;max-width:calc(100% - 8px);pointer-events:none}
+.shelf-badges .shelf-placeholder-badge,.shelf-badges .shelf-flip-badge{margin-left:0;background:rgba(255,250,241,0.92)}

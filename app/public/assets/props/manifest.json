@@ -1,0 +1,302 @@
+{
+  "assetsVersion": "2026-11-09.props-122628",
+  "generatedAt": "2026-11-09T12:26:28+0800",
+  "pipeline": {
+    "name": "prop_glb_pipeline.py",
+    "version": "1.5",
+    "note": "由 scripts/vessel_glb_pipeline.py 复制改造；importlib 复用 flower_glb_pipeline 的 GLB 读写/贴图压缩/重建/校验",
+    "textureCompression": "默认 baseColor 1024 q82 / normal 1024 q90 / metallicRoughness 512 q75；超 1.5MB 时降档 baseColor 512 q80 / normal 512 q85 / MR 256 q70；真 alpha 保留 PNG",
+    "attributeQuantization": "超 1.5MB 时 NORMAL int16 / TEXCOORD uint16（KHR_mesh_quantization），POSITION 保持 float32",
+    "rotationUnit": "degree（three Euler 'XYZ'）",
+    "displayHeightUnit": "meter"
+  },
+  "plan": "assets/local/prop-plan.json",
+  "source": "Aholo Lux3D text-to-3D（G1 / photorealistic / faceCount 30000）",
+  "count": 4,
+  "ok": 4,
+  "creditsTotal": 80,
+  "bytesTotal": 4206092,
+  "targetMaxBytes": 1500000,
+  "assets": [
+    {
+      "id": "candle",
+      "name": "黄铜烛台蜡烛",
+      "kind": "prop",
+      "file": "candle.glb",
+      "url": "assets/props/candle.glb",
+      "targetHeightM": 0.12,
+      "triangles": 31706,
+      "vertices": 21074,
+      "bytes": 989332,
+      "rawBytes": 5711160,
+      "bbox": {
+        "min": [
+          -0.048164,
+          -0.075,
+          -0.048687
+        ],
+        "max": [
+          0.048164,
+          0.075,
+          0.048687
+        ],
+        "size": [
+          0.096327,
+          0.15,
+          0.097373
+        ]
+      },
+      "taskId": 4957573,
+      "runId": "20261109p-candle",
+      "credits": 20,
+      "creditsSource": "runs/<run>/generation.json",
+      "requestedAt": "2026-11-09T11:47:19+0800",
+      "finishedAt": "2026-11-09T11:52:15+0800",
+      "taskElapsedSeconds": null,
+      "promptSha256": "76ae8acd4f098605e654eac6e4546496c6e1ba55c67d2934380e46f10674e0fa",
+      "sha256": "367cd010179e8639b6a545e9bb50a5f12adf87dbe4e1635bf25e2845aa7fcbb6",
+      "indexCompaction": {
+        "savedBytes": 190236,
+        "actions": [
+          {
+            "action": "uint16",
+            "componentType": 5123
+          }
+        ]
+      },
+      "validation": {
+        "glbValid": true,
+        "triangleCountMatch": true,
+        "indexIdentical": true
+      },
+      "withinTarget": true,
+      "displayHeight": 0.12,
+      "displayHeightUnit": "meter",
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "rotationUnit": "degree（three Euler 'XYZ'，按 manifest 顺序应用）",
+      "posture": "upright",
+      "aspect": {
+        "width": 0.096327,
+        "height": 0.15,
+        "depth": 0.097373,
+        "heightOverWidth": 1.5572,
+        "heightOverDepth": 1.5405
+      },
+      "displayNote": "四视角目检：Y 直立、黄铜底座平放，无需旋转修正；按 bbox 高归一化到 0.12m（外宽约 0.077m）。"
+    },
+    {
+      "id": "coffee-set",
+      "name": "咖啡杯碟",
+      "kind": "prop",
+      "file": "coffee-set.glb",
+      "url": "assets/props/coffee-set.glb",
+      "targetHeightM": 0.1,
+      "triangles": 29530,
+      "vertices": 21417,
+      "bytes": 944132,
+      "rawBytes": 4551940,
+      "bbox": {
+        "min": [
+          -0.0425,
+          -0.020616,
+          -0.04248
+        ],
+        "max": [
+          0.0425,
+          0.020616,
+          0.04248
+        ],
+        "size": [
+          0.085,
+          0.041233,
+          0.084959
+        ]
+      },
+      "taskId": 4957581,
+      "runId": "20261109p-coffee-set",
+      "credits": 20,
+      "creditsSource": "runs/<run>/generation.json",
+      "requestedAt": "2026-11-09T11:47:30+0800",
+      "finishedAt": "2026-11-09T11:52:17+0800",
+      "taskElapsedSeconds": null,
+      "promptSha256": "69a22994aaca5dc0515ad70817bb87459e24a25fe26ab437b3644f8df979f4da",
+      "sha256": "d237901ba42054b815e0d2507796bd9f23d03487bf62a9f882add4efbd569e18",
+      "indexCompaction": {
+        "savedBytes": 177180,
+        "actions": [
+          {
+            "action": "uint16",
+            "componentType": 5123
+          }
+        ]
+      },
+      "validation": {
+        "glbValid": true,
+        "triangleCountMatch": true,
+        "indexIdentical": true
+      },
+      "withinTarget": true,
+      "displayHeight": 0.085,
+      "displayHeightUnit": "meter",
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "rotationUnit": "degree（three Euler 'XYZ'，按 manifest 顺序应用）",
+      "posture": "lying-x",
+      "aspect": {
+        "width": 0.085,
+        "height": 0.041233,
+        "depth": 0.084959,
+        "heightOverWidth": 0.4851,
+        "heightOverDepth": 0.4853
+      },
+      "displayNote": "四视角目检确认：杯口朝上、碟子平放，模型原始朝向即正确，**不需要任何旋转**（bbox 高 0.041m < 宽 0.085m 是杯碟本来就扁，不是躺倒，脚本默认的 z=+90° 建议是误判，已按目检改成 0）。displayHeight 取 0.085m：碟径约 0.175m、杯高约 0.07m，接近真实咖啡杯碟；若按 plan 的 0.10m 归一化则碟径 0.207m 偏大。"
+    },
+    {
+      "id": "table-lamp",
+      "name": "布罩台灯",
+      "kind": "prop",
+      "file": "table-lamp.glb",
+      "url": "assets/props/table-lamp.glb",
+      "targetHeightM": 0.45,
+      "triangles": 24098,
+      "vertices": 18776,
+      "bytes": 891152,
+      "rawBytes": 6145012,
+      "bbox": {
+        "min": [
+          -0.136956,
+          -0.26,
+          -0.134382
+        ],
+        "max": [
+          0.136956,
+          0.26,
+          0.134382
+        ],
+        "size": [
+          0.273911,
+          0.52,
+          0.268764
+        ]
+      },
+      "taskId": 4957596,
+      "runId": "20261109p-table-lamp",
+      "credits": 20,
+      "creditsSource": "runs/<run>/generation.json",
+      "requestedAt": "2026-11-09T11:47:40+0800",
+      "finishedAt": "2026-11-09T11:52:39+0800",
+      "taskElapsedSeconds": null,
+      "promptSha256": "d3a50d277612af61392d5a78febf0469bb103862144f1cb61164bfdbe3ffd7ed",
+      "sha256": "3d5b4729bbc48f6b19e38ba92ebad1aee02538ac14c2337efaa36c86db766f8c",
+      "indexCompaction": {
+        "savedBytes": 144588,
+        "actions": [
+          {
+            "action": "uint16",
+            "componentType": 5123
+          }
+        ]
+      },
+      "validation": {
+        "glbValid": true,
+        "triangleCountMatch": true,
+        "indexIdentical": true
+      },
+      "withinTarget": true,
+      "displayHeight": 0.45,
+      "displayHeightUnit": "meter",
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "rotationUnit": "degree（three Euler 'XYZ'，按 manifest 顺序应用）",
+      "posture": "upright",
+      "aspect": {
+        "width": 0.273911,
+        "height": 0.52,
+        "depth": 0.268764,
+        "heightOverWidth": 1.8984,
+        "heightOverDepth": 1.9348
+      },
+      "displayNote": "四视角目检：灯罩在上一体直立、黄铜圆底座平放，灯关闭不发光；无需旋转修正。按 bbox 高 0.45m 归一化（灯罩径约 0.237m）。"
+    },
+    {
+      "id": "dried-bouquet",
+      "name": "干花小瓶",
+      "kind": "prop",
+      "file": "dried-bouquet.glb",
+      "url": "assets/props/dried-bouquet.glb",
+      "targetHeightM": 0.28,
+      "triangles": 44438,
+      "vertices": 46933,
+      "bytes": 1381476,
+      "rawBytes": 10818932,
+      "bbox": {
+        "min": [
+          -0.050934,
+          -0.075,
+          -0.045608
+        ],
+        "max": [
+          0.050934,
+          0.075,
+          0.045608
+        ],
+        "size": [
+          0.101868,
+          0.15,
+          0.091215
+        ]
+      },
+      "taskId": 4957617,
+      "runId": "20261109p-dried-bouquet",
+      "credits": 20,
+      "creditsSource": "runs/<run>/generation.json",
+      "requestedAt": "2026-11-09T11:47:52+0800",
+      "finishedAt": "2026-11-09T11:53:00+0800",
+      "taskElapsedSeconds": null,
+      "promptSha256": "99979f5a9aebbc6ab001c431770f98974c1d3d06ba903d5fe977c6f2d36c910e",
+      "sha256": "3a7500b36393ceeb8833425967e6ff75ea7ba8250a9497581a2436226a259853",
+      "indexCompaction": {
+        "savedBytes": 266628,
+        "actions": [
+          {
+            "action": "uint16",
+            "componentType": 5123
+          }
+        ]
+      },
+      "validation": {
+        "glbValid": true,
+        "triangleCountMatch": true,
+        "indexIdentical": true
+      },
+      "withinTarget": true,
+      "displayHeight": 0.28,
+      "displayHeightUnit": "meter",
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "rotationUnit": "degree（three Euler 'XYZ'，按 manifest 顺序应用）",
+      "posture": "upright",
+      "aspect": {
+        "width": 0.101868,
+        "height": 0.15,
+        "depth": 0.091215,
+        "heightOverWidth": 1.4725,
+        "heightOverDepth": 1.6445
+      },
+      "displayNote": "四视角目检：小陶瓶平底直立、干花向上散开，无需旋转。按 bbox 高 0.28m 归一化（瓶宽约 0.19m）。贴图取舍：为压到 1.5MB 以内，baseColor 降到 512 q80、metallicRoughness 256 q70，并把 NORMAL/TEXCOORD 量化到 16-bit；在此展示尺寸（0.28m）下花材纹理可辨、没有明显糊，只有极细花瓣边缘偏软。"
+    }
+  ]
+}

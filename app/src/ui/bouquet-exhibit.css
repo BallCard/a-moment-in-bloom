@@ -1,0 +1,36 @@
+.bouquet-exhibit {height:100%;min-height:540px;display:grid;grid-template-columns:minmax(300px,.85fr) minmax(0,1.5fr);grid-template-rows:90px 1fr 52px;padding:0 5vw;background-image:radial-gradient(ellipse at 73% 38%,#fffaf3 0%,transparent 65%);overflow:auto;color:#283d32}
+.exhibit-header {grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);gap:20px}
+.exhibit-brand {color:var(--leaf-deep);text-decoration:none;font-size:23px;letter-spacing:.16em;font-weight:600}
+.exhibit-brand span {display:block;font-size:9px;letter-spacing:.25em;font-weight:400;margin-top:5px}
+.exhibit-header a.btn,.exhibit-copy a.btn {text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.exhibit-copy {align-self:center;padding:30px 0 50px;z-index:1}
+.exhibit-kicker {font-size:12px;letter-spacing:.2em;color:var(--muted);margin:0 0 28px}
+.exhibit-copy h1 {font-family:'Noto Serif SC','Songti SC','SimSun',serif;font-size:clamp(40px,4.5vw,68px);font-weight:400;letter-spacing:.12em;color:var(--leaf-deep);margin:0}
+.exhibit-english {font-family:Georgia,serif;font-style:italic;color:var(--rose);font-size:20px;margin:16px 0 28px}
+.exhibit-rule {width:36px;height:1px;background:var(--rose);margin-bottom:26px}
+.exhibit-description {font-size:16px;line-height:2.1;color:var(--ink-soft)}
+.exhibit-flowers {font-size:11px;letter-spacing:.08em;color:var(--muted);line-height:1.8;margin:12px 0 0}
+.exhibit-collection{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px;padding-top:18px;border-top:1px solid var(--line)}
+.exhibit-collection a{display:flex;gap:7px;text-decoration:none;font-size:12px;line-height:1.8;color:var(--muted)}
+.exhibit-collection a[aria-current=page]{color:var(--leaf-deep);text-decoration:underline;text-underline-offset:5px}
+.exhibit-collection span{font-family:Georgia,serif;color:var(--rose)}
+.exhibit-missing{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px}
+.exhibit-source {font-size:12px;color:var(--leaf);letter-spacing:.1em;margin:32px 0 10px}
+.exhibit-note {font-size:12px;line-height:1.9;color:var(--muted);margin:0 0 24px}
+.exhibit-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 12px}
+.exhibit-actions .btn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.exhibit-palette-note{font-size:11px;line-height:1.8;color:var(--muted);margin:0 0 6px}
+.exhibit-cover{margin:0;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:18px 0}
+.exhibit-cover img{display:block;width:min(100%,420px);max-height:calc(100% - 44px);object-fit:cover;border-radius:6px;box-shadow:0 18px 42px rgba(60,45,35,.18)}
+.exhibit-cover figcaption{font-size:11px;letter-spacing:.08em;color:var(--muted)}
+.exhibit-collection em{font-style:normal;font-size:10px;color:var(--rose);border:1px solid currentColor;border-radius:20px;padding:0 6px;line-height:1.7}
+.exhibit-art {position:relative;min-height:0}
+.exhibit-canvas {position:absolute;inset:0 0 84px;touch-action:none}
+.exhibit-canvas canvas {display:block}
+.exhibit-state {position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);text-align:center;background:var(--paper-2);padding:24px;border-radius:var(--radius);box-shadow:var(--shadow-sm);white-space:nowrap}
+.exhibit-controls {position:absolute;bottom:4px;left:0;right:0;text-align:center;min-height:80px}
+.exhibit-controls p {font-size:11px;letter-spacing:.08em;color:var(--muted);margin:0 0 10px}
+.exhibit-controls .btn {margin:0 3px}
+.exhibit-controls span {font-size:11px;color:var(--leaf);display:block;min-height:16px;margin-top:6px}
+.exhibit-footer {grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);font-size:11px;color:var(--muted);gap:12px}
+@media(max-width:760px){.bouquet-exhibit{grid-template-columns:1fr;grid-template-rows:74px auto minmax(500px,65vh) 70px;padding:0 6vw}.exhibit-header{gap:10px}.exhibit-header .btn{font-size:11px}.exhibit-brand{font-size:18px}.exhibit-copy{padding:32px 0 0}.exhibit-copy h1{font-size:42px}.exhibit-kicker{margin-bottom:14px}.exhibit-description,.exhibit-rule{display:none}.exhibit-english{margin:12px 0 16px}.exhibit-source{margin:16px 0 8px}.exhibit-note{margin-bottom:16px}.exhibit-art{min-height:500px}.exhibit-cover{padding:8px 0}.exhibit-cover img{width:100%;max-height:none}.exhibit-footer{font-size:10px;flex-wrap:wrap;align-content:center}.exhibit-controls .btn{font-size:12px}.exhibit-actions{gap:8px}.exhibit-actions .btn{font-size:12px}}

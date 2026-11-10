@@ -1,0 +1,56 @@
+/* 没有人物立绘的来信：素色信笺 + 姓氏字，避免复用别人的照片。 */
+.customer-portrait.is-initial {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 6px;
+  background:
+    radial-gradient(circle at 30% 22%, rgba(255, 251, 242, 0.9), transparent 58%),
+    linear-gradient(158deg, #ece0cd 0%, #dcc9ae 100%);
+  color: #806a52;
+  font-family: 'Songti SC', 'Noto Serif SC', 'STSong', serif;
+  font-size: clamp(26px, 5vw, 56px);
+  line-height: 1;
+  user-select: none;
+}
+
+.customer-portrait.is-initial > span {
+  display: block;
+  padding-bottom: 2px;
+  border-bottom: 1px solid rgba(128, 106, 82, 0.35);
+}
+
+.customer-portrait.is-initial.is-small {
+  width: 42px;
+  height: 46px;
+  aspect-ratio: auto;
+  font-size: 18px;
+  border-radius: 50%;
+}
+
+.commission-letter > .customer-portrait.is-initial {
+  width: 190px;
+  max-height: 340px;
+  aspect-ratio: 3 / 4;
+  border-radius: 12px;
+  align-self: stretch;
+}
+
+@media (max-width: 1400px) {
+  .customer-portrait.is-initial {
+    max-height: 175px;
+  }
+}
+
+@media (max-width: 800px) {
+  .commission-letter > .customer-portrait.is-initial {
+    width: 90px;
+  }
+}
+
+@media (max-width: 700px) {
+  .commission-letter > .customer-portrait.is-initial {
+    width: 90px;
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-11-09T05:09:26.209Z",
+  "source": "v13-scene-thumbs.mjs",
+  "sample": 6,
+  "size": 360,
+  "scenes": [
+    {
+      "id": "window",
+      "bytes": 11488
+    },
+    {
+      "id": "studio",
+      "bytes": 13803
+    },
+    {
+      "id": "gallery",
+      "bytes": 12242
+    },
+    {
+      "id": "florist",
+      "bytes": 15037
+    },
+    {
+      "id": "garden",
+      "bytes": 15265
+    },
+    {
+      "id": "festive",
+      "bytes": 21772
+    },
+    {
+      "id": "living",
+      "bytes": 17155
+    },
+    {
+      "id": "cafe",
+      "bytes": 14934
+    }
+  ]
+}
