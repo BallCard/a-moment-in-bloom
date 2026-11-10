@@ -51,8 +51,8 @@ export function StartScreen({galleryInitially = false, onContinue}: {galleryInit
       <h1 id="start-title">花间一刻</h1>
       <p className="start-tagline">把心意，慢慢做成一束花。</p>
       <div className="start-choices">
-        {count > 0 ? <button autoFocus className="btn is-on" data-testid="start-continue" onClick={onContinue}>继续上次的花束 <small>{count} 枝 · 本机存档</small></button> : <button autoFocus className="btn is-on" onClick={onContinue}>回到空白花台</button>}
-        <button className="btn" data-testid="start-blank" onClick={() => {if (startBlank()) onContinue(); else setError('本机存储空间不足，未能备份，所以还没有新建。请先继续原作品并导出备份。');}}>从空白开始</button>
+        {count > 0 ? <button autoFocus className="btn is-on" data-testid="start-continue" onClick={onContinue}>继续上次的花束 <small>{count} 枝 · 本机存档</small></button> : <button autoFocus className="btn is-on" data-testid="start-begin" onClick={onContinue}>开始插花</button>}
+        {count > 0 ? <button className="btn" data-testid="start-blank" onClick={() => {if (startBlank()) onContinue(); else setError('本机存储空间不足，未能备份，所以还没有新建。请先继续原作品并导出备份。');}}>从空白开始</button> : null}
         <button className="btn" data-testid="start-gallery" aria-expanded={gallery} onClick={() => setGallery(!gallery)}>{gallery ? '收起作品展' : '看作品展'}</button>
       </div>
       <p className="start-note">{gallery ? '慢慢看。喜欢哪一束的配色，就直接从它开始。' : count ? '从空白开始会保留一份新建前备份。仅保留最近一份，长期收藏请存相册。' : '选几枝喜欢的花，开始今天的创作。'}</p>

@@ -33,6 +33,18 @@ const exhibitId = paletteApplied ? null : params.get('exhibit');
 const exhibit = exhibitId !== null;
 const item = findShowcase(exhibitId);
 const BouquetExhibit = lazy(() => import('./ui/BouquetExhibit'));
+// V16.1：首次进入（本机还没有花束）也先看起始页，别直接把人丢进工作台。
+// 自动化/调试环境（navigator.webdriver 或 ?sample= / ?size= 等入口）仍直接进工作台，
+// 这样既有 40+ 个验证脚本不用逐个多点一次「开始插花」。
+const automated =
+  typeof navigator !== 'undefined' &&
+  (navigator as Navigator & { webdriver?: boolean }).webdriver === true;
+function initialEntry(): 'workbench' | 'start' | 'gallery' {
+  if (paletteApplied || params.has('sample')) return 'workbench';
+  if (store.getState().doc.stems.length > 0) return 'start';
+  const debugEntry = ['size', 'head', 'view', 'sample'].some((key) => params.has(key));
+  return !automated && !debugEntry ? 'start' : 'workbench';
+}
 const loadingMarkup = document.getElementById('boot-splash')?.innerHTML ?? '';
 function LoadingScreen(): React.JSX.Element {
   return <div className="bloom-boot" role="status" dangerouslySetInnerHTML={{__html: loadingMarkup}} />;
@@ -48,8 +60,7 @@ function Ready(): null {
   return null;
 }
 function WorkbenchEntry(): React.JSX.Element {
-  const [entry, setEntry] = useState<'workbench' | 'start' | 'gallery'>(() =>
-    !paletteApplied && !params.has('sample') && store.getState().doc.stems.length > 0 ? 'start' : 'workbench');
+  const [entry, setEntry] = useState<'workbench' | 'start' | 'gallery'>(initialEntry);
   return entry === 'workbench'
     ? <Suspense fallback={<LoadingScreen />}><App onOpenStart={() => setEntry('start')} onOpenGallery={() => setEntry('gallery')} /><Ready /></Suspense>
     : <><StartScreen galleryInitially={entry === 'gallery'} onContinue={() => setEntry('workbench')} /><Ready /></>;

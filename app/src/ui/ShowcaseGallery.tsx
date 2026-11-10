@@ -17,7 +17,7 @@ function GalleryCard({item}: {item: ShowcaseItem}): React.JSX.Element {
   const handmade = item.source === 'handmade';
   return <article className="gallery-item" data-testid={`gallery-${item.id}`} data-source={item.source}>
     <a className="gallery-cover" href={`?exhibit=${item.id}`} aria-label={`欣赏${item.title}`}>
-      <img src={showcaseAsset(item.cover)} alt={`${item.title}成品封面`} loading="lazy" width="480" height="560"/>
+      <img src={showcaseAsset(item.cover)} alt={`${item.title}成品封面`} loading="lazy" width="1200" height="1400"/>
       <span>{handmade ? '看看成品 ↗' : '欣赏三维作品 ↗'}</span>
     </a>
     <div className="gallery-label">
